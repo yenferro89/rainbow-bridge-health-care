@@ -28,6 +28,20 @@ It skips any `[BRACKETED]` value rather than publishing it. Asserting a fake add
 worse than having no structured data, and the never-invent-facts rule applies to machines reading
 the site as much as to people. **Stands.**
 
+## 2026-08-04 — The photograph is the click target, not just the heading
+Reported as "services are not clickable." They were — but only the heading text and a small
+"More about" line were links, while the 640px photograph next to them was not. On a panel that
+reads as a card, the photograph is what people aim at, so a click that does nothing feels broken
+even though every link on the page works.
+
+The frame is now a link too, `aria-hidden` and `tabIndex={-1}` so it does not create a second tab
+stop to a destination the heading link already covers. Hover state moved from the frame to the
+whole `.svc` panel so both halves respond together.
+
+**The general lesson, second time in two days:** "is there a link?" is not the same question as
+"can someone click the thing they are looking at." Test the biggest visual target, not the markup.
+See also the county cards, 2026-08-03. **Stands.**
+
 ## 2026-08-04 — Per-service pages, sitemap, robots and canonicals
 A full crawl found the footer's five "Care at home" links all pointing at `/services` — 86 links
 across the site landing on one page. Individual service pages are what people actually search for

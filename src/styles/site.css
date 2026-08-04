@@ -996,6 +996,8 @@ a {
 }
 
 .svc__frame {
+  display: block;
+  cursor: pointer;
   position: relative;
   overflow: hidden;
   border-radius: clamp(18px, 2.2vw, 30px);
@@ -1020,7 +1022,7 @@ a {
 }
 
 @media (hover: hover) {
-  .svc__frame:hover {
+  .svc:hover .svc__frame {
     transform: translateY(-4px);
     box-shadow:
       0 2px 6px color-mix(in srgb, var(--svc-band, var(--iris)) 22%, transparent),
@@ -1239,7 +1241,8 @@ a {
   transition: background-size 0.45s var(--ease-out);
 }
 
-.svc__link:hover {
+.svc__link:hover,
+.svc:hover .svc__link {
   background-size: 100% 2px;
 }
 
@@ -1258,7 +1261,8 @@ a {
   transition: transform 0.4s var(--ease-out);
 }
 
-.svc__more a:hover::after {
+.svc__more a:hover::after,
+.svc:hover .svc__more a::after {
   transform: translateX(0.35rem);
 }
 

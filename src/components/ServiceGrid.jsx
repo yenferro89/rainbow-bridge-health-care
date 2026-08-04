@@ -117,7 +117,18 @@ export default function ServiceGrid() {
                   <span className="svc__index" aria-hidden="true">
                     {n}
                   </span>
-                  <div className="svc__frame">
+                  {/* The photograph is the biggest target on the panel and is
+                      what people actually click, so it links through too. It is
+                      hidden from assistive tech and skipped by the keyboard —
+                      the heading link beside it already carries the same
+                      destination and a real accessible name, and two tab stops
+                      to one place is just noise. */}
+                  <Link
+                    className="svc__frame"
+                    to={`/services/${s.slug}`}
+                    tabIndex={-1}
+                    aria-hidden="true"
+                  >
                     {s.image && (
                       <img
                         className="svc__img"
@@ -130,7 +141,7 @@ export default function ServiceGrid() {
                         decoding="async"
                       />
                     )}
-                  </div>
+                  </Link>
                 </div>
 
                 <div className="svc__copy">
