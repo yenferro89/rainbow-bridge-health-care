@@ -84,22 +84,44 @@ const AnimatedContent = ({
     });
 
     // PATCHED (local change to the vendored React Bits component).
+    //
     // The wrapper renders with inline visibility:hidden and only becomes
-    // visible when the ScrollTrigger fires. If the trigger never fires —
-    // a missed refresh after fonts/images settle, a layout shift, a short
-    // page where the element starts past its own start point — the content
-    // is invisible permanently. On a page carrying a care provider's phone
-    // number and licence numbers that is not an acceptable failure mode.
+    // visible when the ScrollTrigger fires. When it doesn't fire, the content
+    // is invisible permanently — and it demonstrably didn't: with several of
+    // these on one page, two of the three service categories rendered as blank
+    // space. The single delayed timeout that used to sit here only helped if
+    // the element happened to be on screen at that exact moment, so anything
+    // below the fold stayed hidden.
+    //
+    // An IntersectionObserver is the reliable backstop: it fires on real
+    // visibility regardless of what ScrollTrigger computed, including when
+    // lazy images and webfonts shift the layout after positions were measured.
+    const io = new IntersectionObserver(
+      (entries) => {
+        for (const entry of entries) {
+          if (entry.isIntersecting) {
+            tl.play();
+            io.disconnect();
+          }
+        }
+      },
+      { rootMargin: "0px 0px -10% 0px" }
+    );
+    io.observe(el);
+
+    // Last resort: if neither path has run by the time everything has settled,
+    // show the content anyway. Nothing on this site is worth hiding behind a
+    // failed animation.
     const failsafe = setTimeout(() => {
       if (!tl.progress()) {
         ScrollTrigger.refresh();
-        const r = el.getBoundingClientRect();
-        if (r.top < window.innerHeight) tl.play();
+        if (!tl.progress()) gsap.set(el, { [axis]: 0, scale: 1, opacity: 1 });
       }
-    }, 2500);
+    }, 3000);
 
     return () => {
       clearTimeout(failsafe);
+      io.disconnect();
       st.kill();
       tl.kill();
     };
