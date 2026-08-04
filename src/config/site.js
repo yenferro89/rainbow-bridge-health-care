@@ -187,11 +187,17 @@ export const serviceCategories = [
     services: [
       {
         name: "Personal Care",
+        image: "img/services/personal-care.jpg",
+        image2x: "img/services/personal-care@2x.jpg",
+        alt: "A caregiver holding an older woman's hands in her own living room",
         body: "Our Personal Care Services provide compassionate assistance with daily living activities, including bathing, grooming, dressing, toileting, mobility, and personal hygiene. We are committed to promoting independence, comfort, and dignity while ensuring each client's individual needs are met.",
         band: "var(--band-red)",
       },
       {
         name: "Homemaker & Companion",
+        image: "img/services/homemaker-companion.jpg",
+        image2x: "img/services/homemaker-companion@2x.jpg",
+        alt: "A caregiver bringing a meal through to a smiling older woman at her kitchen table",
         body: "Our Homemaker & Companion Services help maintain a clean, safe, and comfortable home environment. Also provide meaningful social interaction and emotional support. Services include:",
         band: "var(--band-orange)",
         lists: [
@@ -223,6 +229,9 @@ export const serviceCategories = [
     services: [
       {
         name: "Personal Care Service (PCS) Under 21",
+        image: "img/services/pcs-under-21.jpg",
+        image2x: "img/services/pcs-under-21@2x.jpg",
+        alt: "A young boy in supportive seating reaching for a sensory ball held out to him",
         body: "Our Personal Care Service (PCS) under 21 program provides compassionate, individualized assistance to individuals 20 years old and younger with medical or functional needs. Our trained caregivers help with activities of daily living, personal hygiene, mobility, meal assistance, and other essential tasks, allowing clients to remain safe, comfortable, and supported in their home while promoting their health, independence, and overall well-being.",
         band: "var(--band-yellow)",
       },
@@ -233,6 +242,9 @@ export const serviceCategories = [
     services: [
       {
         name: "Personal Support",
+        image: "img/services/personal-support.jpg",
+        image2x: "img/services/personal-support@2x.jpg",
+        alt: "A caregiver steadying an older man as he stands from his sofa with a walking stick",
         body: "Our Personal Support Services provide individualized assistance that empowers individuals to live as independently as possible. Services may include help with daily routines, assistance and training in activities of daily living, such as eating, bathing, personal hygiene, and preparation of meals. In some cases this service can also include household chores and access to the community.",
         band: "var(--band-green)",
       },
@@ -240,11 +252,17 @@ export const serviceCategories = [
         // OPEN: the client abbreviated this both "LSD1" and "LDS1". Spelled out
         // in full until she confirms which is correct.
         name: "Life Skills Development Level 1",
+        image: "img/services/life-skills.jpg",
+        image2x: "img/services/life-skills@2x.jpg",
+        alt: "A woman working through a book at the table with a girl with Down syndrome",
         body: "Our Life Skills Development Level 1 services help individuals develop and strengthen essential daily living skills to promote greater independence and community involvement. We provide personalized support with communication, social interaction, decision-making, self-care, and everyday life activities based on each person's goals and abilities.",
         band: "var(--band-sky)",
       },
       {
         name: "Respite",
+        image: "img/services/respite.jpg",
+        image2x: "img/services/respite@2x.jpg",
+        alt: "A couple sitting together on their sofa at home, laughing",
         body: "Our Respite Care Services provide temporary relief for primary caregivers while ensuring individuals continue to receive safe, compassionate, and high-quality care. Whether for a few hours or longer periods, our trained staff offers personalized support in a comfortable and familiar environment.",
         band: "var(--band-violet)",
       },

@@ -37,6 +37,35 @@ These live in `src/reactbits/` and are treated as third-party — don't refactor
 React Bits has a much larger catalogue than the five vendored here. Pulling in another one is
 expected and fine — vendor it into `src/reactbits/` the same way, and add it to the table above.
 
+## Service photography — Adobe Stock, licensed 2026-08-03
+
+Licensed to the owner's Adobe account from the **free tier**. Keep this table — it is the
+licence record, and swapping an image without updating it loses the provenance.
+
+| Service | File | Adobe Stock ID |
+|---|---|---|
+| Personal Care | `personal-care.jpg` | 143418179 |
+| Homemaker & Companion | `homemaker-companion.jpg` | 1891342995 |
+| Personal Care Service (PCS) Under 21 | `pcs-under-21.jpg` | 407717627 |
+| Personal Support | `personal-support.jpg` | 535131396 |
+| Life Skills Development Level 1 | `life-skills.jpg` | 532310888 |
+| Respite | `respite.jpg` | 1157045019 |
+
+In `public/img/services/`, each at 640×480 and 1280×960 (`@2x`), 4:3, ~50–300 kB, served via
+`srcSet` with `loading="lazy"`. Originals were 2–8 MB.
+
+**Selection rule:** domestic settings only — someone's own living room, kitchen or sofa. No
+hospital corridors, no nursing-home dayrooms, no white-coat portraits against clinic walls. The
+whole proposition is that care happens at home, and clinical stock contradicts the copy. Each
+photo carries a soft-light wash of its service's band colour so six different sources still read
+as one set.
+
+**Searching Stock:** short keyword queries work (`elderly care`, `respite care`); long
+natural-language ones return zero hits. Filter `pricing: "free"` to stay in the free tier.
+
+**There is no image generation in this environment** — the Adobe connector is editing-only and
+says so explicitly. Stock, or photographs from the client, are the only routes to photography.
+
 ## House rules for using any of them
 
 - **Respect reduced motion.** Every animated component is gated on

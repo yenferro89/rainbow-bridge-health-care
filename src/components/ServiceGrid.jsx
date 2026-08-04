@@ -1,6 +1,7 @@
 import AnimatedContent from "../reactbits/AnimatedContent.jsx";
 import { useReducedMotion } from "../lib/useReducedMotion.js";
 import { serviceCategories } from "../config/site.js";
+import { asset } from "../lib/asset.js";
 
 /**
  * Services as an editorial list, not a grid of text boxes.
@@ -22,6 +23,22 @@ export default function ServiceGrid() {
             {category.services.map((s) => (
               <li className="row" key={s.name} style={{ "--row-band": s.band }}>
                 <div className="row__wash" aria-hidden="true" />
+
+                {s.image && (
+                  <div className="row__media">
+                    <img
+                      className="row__img"
+                      src={asset(s.image)}
+                      srcSet={`${asset(s.image)} 1x, ${asset(s.image2x)} 2x`}
+                      alt={s.alt}
+                      width="640"
+                      height="480"
+                      loading="lazy"
+                      decoding="async"
+                    />
+                    <span className="row__tint" aria-hidden="true" />
+                  </div>
+                )}
 
                 <div className="row__text">
                   <h4 className="row__name">{s.name}</h4>

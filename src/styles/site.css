@@ -943,6 +943,57 @@ a {
   padding: clamp(1.5rem, 3vw, 2.25rem) clamp(1.25rem, 2.5vw, 2rem);
   padding-left: clamp(1.6rem, 3vw, 2.5rem);
   transition: transform 0.5s var(--ease-out);
+  display: grid;
+  gap: clamp(1.1rem, 2.5vw, 2rem);
+  align-items: center;
+}
+
+/* Photo beside the copy from tablet up, stacked above it on phones. */
+@media (min-width: 46rem) {
+  .row {
+    grid-template-columns: minmax(0, 15rem) minmax(0, 1fr);
+  }
+}
+
+.row__media {
+  position: relative;
+  overflow: hidden;
+  border-radius: var(--radius);
+  aspect-ratio: 4 / 3;
+  background: rgba(104, 48, 144, 0.06);
+}
+
+.row__img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transform: scale(1.02);
+  transition: transform 0.9s var(--ease-out), filter 0.7s var(--ease-out);
+  filter: saturate(0.94);
+}
+
+/* A breath of the service's band over the photo, so six different stock
+   sources still read as one set. */
+.row__tint {
+  position: absolute;
+  inset: 0;
+  background: var(--row-band, var(--iris));
+  mix-blend-mode: soft-light;
+  opacity: 0.5;
+  transition: opacity 0.7s var(--ease-out);
+  pointer-events: none;
+}
+
+@media (hover: hover) {
+  .row:hover .row__img {
+    transform: scale(1.06);
+    filter: saturate(1);
+  }
+
+  .row:hover .row__tint {
+    opacity: 0.24;
+  }
 }
 
 /* The band runs the full height of the row's left edge — the colour as an
