@@ -9,8 +9,27 @@ import { resolve } from "node:path";
  */
 const base = process.env.BASE_PATH ?? "/rainbow-bridge-health-care/";
 
-/** Client routes that need a real file on disk. Keep in step with App.jsx. */
-const ROUTES = ["contact", "services", "about", "privacy", "terms"];
+/**
+ * Client routes that need a real file on disk. Keep in step with App.jsx.
+ * The county pages are the SEO surface, so a hard-landed visit from Google
+ * must answer 200 rather than fall through to the 404 catch-all.
+ */
+const COUNTY_SLUGS = [
+  "orange-county",
+  "osceola-county",
+  "seminole-county",
+  "brevard-county",
+];
+
+const ROUTES = [
+  "contact",
+  "services",
+  "about",
+  "privacy",
+  "terms",
+  "service-areas",
+  ...COUNTY_SLUGS.map((s) => `service-areas/${s}`),
+];
 
 /**
  * GitHub Pages has no server-side rewrite, so a hard refresh on /contact would

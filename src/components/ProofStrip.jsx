@@ -12,12 +12,12 @@ export default function ProofStrip() {
       {proofPoints.map((p) => (
         <li className="trust__item" key={p.label}>
           <span className="trust__figure">
-            <Ph>
-              {reduced ? p.figure : <CountUp to={p.figure} duration={1.6} />}
-              {p.suffix}
-            </Ph>
+            {reduced ? p.figure : <CountUp to={p.figure} duration={1.6} />}
+            {p.suffix}
           </span>
-          <span className="trust__label">{p.label}</span>
+          <span className="trust__label">
+            <Ph>{p.label}</Ph>
+          </span>
         </li>
       ))}
     </ul>

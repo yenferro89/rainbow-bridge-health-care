@@ -6,6 +6,8 @@ import StructuredData from "./components/StructuredData.jsx";
 import Home from "./pages/Home.jsx";
 import Contact from "./pages/Contact.jsx";
 import Services from "./pages/Services.jsx";
+import ServiceAreas from "./pages/ServiceAreas.jsx";
+import ServiceArea from "./pages/ServiceArea.jsx";
 import About from "./pages/About.jsx";
 import Privacy from "./pages/Privacy.jsx";
 import Terms from "./pages/Terms.jsx";
@@ -32,6 +34,8 @@ export default function App() {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/services" element={<Services />} />
+          <Route path="/service-areas" element={<ServiceAreas />} />
+          <Route path="/service-areas/:slug" element={<ServiceArea />} />
           <Route path="/about" element={<About />} />
           <Route path="/contact" element={<Contact />} />
           <Route path="/privacy" element={<Privacy />} />

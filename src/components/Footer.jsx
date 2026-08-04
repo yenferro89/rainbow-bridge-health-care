@@ -4,7 +4,7 @@ import {
   contact,
   credentials,
   services,
-  serviceAreas,
+  counties,
   fullAddress,
 } from "../config/site.js";
 import { asset } from "../lib/asset.js";
@@ -30,9 +30,15 @@ export default function Footer() {
             <p className="footer__blurb" style={{ marginTop: "1rem" }}>
               <Ph>{fullAddress()}</Ph>
             </p>
-            <p className="footer__blurb" style={{ marginTop: "0.6rem" }}>
-              Serving {serviceAreas.join(", ")} counties.
-            </p>
+            <ul className="footer__list" style={{ marginTop: "0.8rem" }}>
+              {counties.map((c) => (
+                <li key={c.slug}>
+                  <Link to={`/service-areas/${c.slug}`}>
+                    In-home care in {c.name}
+                  </Link>
+                </li>
+              ))}
+            </ul>
           </div>
 
           <div>

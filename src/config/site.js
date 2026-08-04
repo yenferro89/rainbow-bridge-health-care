@@ -93,6 +93,87 @@ export const proofPoints = [
 export const serviceAreas = ["Orange", "Osceola", "Seminole", "Brevard"];
 
 /**
+ * One page per county at /service-areas/<slug>, for local search.
+ *
+ * The towns are public geography, not business claims — listing them is safe.
+ * `angle` describes what care in that county tends to look like, and must stay
+ * on the same side of the line: no caregiver counts, no client numbers, no
+ * office locations we do not have. If the client supplies real county-level
+ * detail, this is where it goes.
+ */
+export const counties = [
+  {
+    slug: "orange-county",
+    name: "Orange County",
+    seat: "Orlando",
+    towns: [
+      "Orlando",
+      "Winter Park",
+      "Apopka",
+      "Ocoee",
+      "Winter Garden",
+      "Maitland",
+      "Windermere",
+      "Belle Isle",
+    ],
+    angle:
+      "Our office is in Orlando, so Orange County is the ground we cover most closely. It is also the county where families most often reach us mid-crisis — a hospital discharge scheduled for tomorrow, a caregiver who has just resigned. Care is delivered in the home, whether that home is a bungalow in College Park or an apartment near the medical district.",
+    band: "var(--band-red)",
+  },
+  {
+    slug: "osceola-county",
+    name: "Osceola County",
+    seat: "Kissimmee",
+    towns: [
+      "Kissimmee",
+      "St. Cloud",
+      "Celebration",
+      "Poinciana",
+      "Harmony",
+      "BVL",
+    ],
+    angle:
+      "Osceola households are frequently multigenerational, and the person who needs help is often already living with family. That changes the job: the caregiver is working alongside relatives rather than instead of them. Many of the families we speak with here are more comfortable in Spanish, and we make sure that is never the reason a call goes badly.",
+    band: "var(--band-orange)",
+  },
+  {
+    slug: "seminole-county",
+    name: "Seminole County",
+    seat: "Sanford",
+    towns: [
+      "Sanford",
+      "Altamonte Springs",
+      "Lake Mary",
+      "Oviedo",
+      "Winter Springs",
+      "Casselberry",
+      "Longwood",
+    ],
+    angle:
+      "Seminole calls tend to come earlier — an adult child noticing that a parent living alone has started skipping meals or missing medication. Earlier is easier. A few hours of homemaker and companion support each week is often enough to hold a household steady for a long time.",
+    band: "var(--band-green)",
+  },
+  {
+    slug: "brevard-county",
+    name: "Brevard County",
+    seat: "Titusville",
+    towns: [
+      "Melbourne",
+      "Palm Bay",
+      "Titusville",
+      "Cocoa",
+      "Rockledge",
+      "Merritt Island",
+      "Viera",
+      "Satellite Beach",
+    ],
+    angle:
+      "Brevard is a long county, and a lot of its older residents retired here from somewhere else — which means the nearest family may be several states away. Distance is the recurring problem. We are used to keeping a son or daughter in another time zone genuinely informed about how a parent is doing.",
+    band: "var(--band-sky)",
+  },
+];
+
+/**
  * Service lines, grouped into the three categories the client asked for on
  * 2026-07-29. All body copy below is hers, verbatim apart from spelling fixes.
  * See docs/client-feedback-2026-07-29.md.
@@ -258,6 +339,7 @@ export const brevo = {
 export const nav = [
   { label: "Home", to: "/" },
   { label: "Services", to: "/services" },
+  { label: "Service areas", to: "/service-areas" },
   { label: "About", to: "/about" },
   { label: "Contact", to: "/contact" },
 ];
