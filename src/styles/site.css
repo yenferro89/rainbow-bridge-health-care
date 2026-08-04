@@ -1132,10 +1132,20 @@ a {
   transform-style: preserve-3d;
 }
 
+/* The anchor never moves — it is the click surface, and it stays exactly where
+   the pointer expects it. Only .county__card rotates. Rotating the anchor
+   itself swings it out from under the cursor and the click lands on the <li>
+   behind it, silently killing the link. */
 .county__inner {
+  display: block;
+  text-decoration: none;
+  color: inherit;
+  border-radius: clamp(16px, 2vw, 26px);
+  transform-style: preserve-3d;
+}
+
+.county__card {
   position: relative;
-  /* Flex, not grid — the CTA pins to the base with margin-top:auto, which
-     align-content:start on a grid quietly ignores. */
   display: flex;
   flex-direction: column;
   align-items: flex-start;
@@ -1144,9 +1154,7 @@ a {
   overflow: hidden;
   padding: clamp(1.9rem, 3.6vw, 3rem);
   min-height: clamp(15rem, 26vw, 20rem);
-  border-radius: clamp(16px, 2vw, 26px);
-  text-decoration: none;
-  color: inherit;
+  border-radius: inherit;
   background: var(--daylight);
   border: 1px solid rgba(104, 48, 144, 0.14);
   transform-style: preserve-3d;
@@ -1157,7 +1165,8 @@ a {
   transition: box-shadow 0.6s var(--ease-out), border-color 0.6s var(--ease-out);
 }
 
-.county__inner:hover {
+.county__inner:hover .county__card,
+.county__inner:focus-visible .county__card {
   border-color: color-mix(in srgb, var(--county-band, var(--iris)) 45%, transparent);
   box-shadow:
     0 2px 6px rgba(24, 11, 38, 0.06),
@@ -1166,6 +1175,7 @@ a {
 
 /* The band as a light source behind the card, tracking the pointer. */
 .county__bloom {
+  pointer-events: none;
   position: absolute;
   z-index: -1;
   inset: -30%;
@@ -1189,6 +1199,7 @@ a {
 }
 
 .county__name {
+  display: block;
   font-family: var(--display);
   font-variation-settings: "SOFT" 70, "WONK" 0, "opsz" 144;
   font-size: var(--step-4);

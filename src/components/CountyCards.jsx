@@ -37,7 +37,10 @@ export default function CountyCards() {
       });
 
       cards.forEach((card) => {
-        const inner = card.querySelector(".county__inner");
+        // Rotate the visual layer, never the anchor. Rotating the <a> swings it
+        // out from under the pointer and the click lands on the <li> behind it,
+        // which makes the whole card silently unclickable.
+        const inner = card.querySelector(".county__card");
         const bloom = card.querySelector(".county__bloom");
 
         const rx = gsap.quickTo(inner, "rotationX", { duration: 0.5, ease: "power3.out" });
@@ -82,15 +85,17 @@ export default function CountyCards() {
       {counties.map((c) => (
         <li className="county" key={c.slug} style={{ "--county-band": c.band }}>
           <Link className="county__inner" to={`/service-areas/${c.slug}`}>
-            <span className="county__bloom" aria-hidden="true" />
+            <span className="county__card">
+              <span className="county__bloom" aria-hidden="true" />
 
-            <span className="county__label">County</span>
-            <h2 className="county__name">{c.name.replace(" County", "")}</h2>
+              <span className="county__label">County</span>
+              <span className="county__name">{c.name.replace(" County", "")}</span>
 
-            <span className="county__towns">{c.towns.slice(0, 4).join(" · ")}</span>
+              <span className="county__towns">{c.towns.slice(0, 4).join(" · ")}</span>
 
-            <span className="county__cta" aria-hidden="true">
-              In-home care in {c.name}
+              <span className="county__cta" aria-hidden="true">
+                In-home care in {c.name}
+              </span>
             </span>
           </Link>
         </li>
