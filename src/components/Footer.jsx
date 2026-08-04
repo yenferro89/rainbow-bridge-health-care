@@ -1,5 +1,12 @@
 import { Link } from "react-router-dom";
-import { site, contact, credentials, services, fullAddress } from "../config/site.js";
+import {
+  site,
+  contact,
+  credentials,
+  services,
+  serviceAreas,
+  fullAddress,
+} from "../config/site.js";
 import { asset } from "../lib/asset.js";
 import Ph from "./Ph.jsx";
 
@@ -23,6 +30,9 @@ export default function Footer() {
             <p className="footer__blurb" style={{ marginTop: "1rem" }}>
               <Ph>{fullAddress()}</Ph>
             </p>
+            <p className="footer__blurb" style={{ marginTop: "0.6rem" }}>
+              Serving {serviceAreas.join(", ")} counties.
+            </p>
           </div>
 
           <div>
@@ -42,8 +52,16 @@ export default function Footer() {
               <li>
                 <a href={contact.phoneHref}>
                   <Ph>{contact.phone}</Ph>
-                </a>
+                </a>{" "}
+                <span style={{ color: "var(--on-dark-faint)" }}>Office</span>
               </li>
+              <li>
+                <a href={contact.mobilePhoneHref}>
+                  <Ph>{contact.mobilePhone}</Ph>
+                </a>{" "}
+                <span style={{ color: "var(--on-dark-faint)" }}>Text or call</span>
+              </li>
+              <li style={{ color: "var(--on-dark-faint)" }}>eFax {contact.eFax}</li>
               <li>
                 <a href={contact.emailHref}>
                   <Ph>{contact.email}</Ph>

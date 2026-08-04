@@ -40,6 +40,13 @@ npm run preview   # port 4173
 - **Brand colors are sampled, not chosen.** They come from the client's logo PNG. Don't "improve",
   harmonize, or substitute them. See `DESIGN.md`.
 - **Legal pages need counsel.** Privacy and Terms are not for us to draft.
+- **Do not make it look AI-generated.** This is the owner's standing instruction. Build with the
+  vocabulary the site already has — the colour bands, the hairline grids, the `band--*` sections,
+  the crossings, `DESIGN.md`'s "light through water" idea, and the vendored React Bits components
+  in `src/reactbits/` (`AnimatedContent`, `ScrollReveal`, `SplitText`, `CountUp`, `GradualBlur`).
+  Reach for an existing pattern before inventing a new one. The tells to avoid: generic card
+  grids with drop shadows, three-column feature blocks, pill badges, emoji headings, gradient
+  hero text, and stock "modern SaaS" layout that could belong to any site.
 
 ## Conventions
 

@@ -3,7 +3,50 @@ import Seo from "../components/Seo.jsx";
 import Hero from "../components/Hero.jsx";
 import ProofStrip from "../components/ProofStrip.jsx";
 import Ph from "../components/Ph.jsx";
+import AnimatedContent from "../reactbits/AnimatedContent.jsx";
+import { useReducedMotion } from "../lib/useReducedMotion.js";
 import { site } from "../config/site.js";
+
+/**
+ * Vision and Mission sit in the same hairline grid as the services, carrying
+ * two bands of the spectrum. Reusing that idiom rather than inventing a card
+ * block keeps the page in the site's own language.
+ */
+function Statements() {
+  const reduced = useReducedMotion();
+
+  const items = (
+    <ul className="services" style={{ "--service-cols": 2, "--service-cols-sm": 2 }}>
+      <li className="service" style={{ "--service-band": "var(--band-sky)" }}>
+        <h2 className="service__name">Our Vision</h2>
+        <p className="service__body">
+          To redefine home and community care by creating a future where every
+          individual is empowered to thrive, every family feels supported, and
+          exceptional care becomes the standard — not the exception.
+        </p>
+      </li>
+
+      <li className="service" style={{ "--service-band": "var(--band-violet)" }}>
+        <h2 className="service__name">Our Mission</h2>
+        <p className="service__body">
+          We deliver personalized care that goes beyond daily support. By
+          building meaningful relationships, promoting independence, and
+          embracing each person's unique abilities, we create experiences that
+          inspire confidence, enrich lives, and strengthen the communities we
+          serve.
+        </p>
+      </li>
+    </ul>
+  );
+
+  if (reduced) return items;
+
+  return (
+    <AnimatedContent distance={40} duration={0.9} threshold={0.25}>
+      {items}
+    </AnimatedContent>
+  );
+}
 
 export default function About() {
   return (
@@ -28,26 +71,26 @@ export default function About() {
           <div className="section-head">
             <p className="eyebrow section-head__eyebrow">Our story</p>
             <h2 className="display section-head__title">
-              Why <Ph>[FOUNDER NAME]</Ph> started this
+              Why we started this
             </h2>
           </div>
 
           <p className="prose">
-            <Ph>
-              [Replace this with the real founding story. What happened, who it
-              happened to, and what was missing from the care available at the
-              time. Two or three paragraphs is plenty — families read this page
-              to find out whether you are people they can trust in their
-              mother's kitchen, not to read a corporate history.]
-            </Ph>
+            Every person has a unique journey, and every family deserves a
+            trusted partner along the way. Our agency was founded with a simple
+            belief: exceptional care is not just about meeting needs — it's
+            about building relationships, creating opportunities for
+            independence, and making every interaction meaningful. We are
+            committed to delivering personalized support that empowers
+            individuals to live with confidence, dignity, and purpose in the
+            place they call home.
           </p>
+        </div>
+      </section>
 
-          <p className="prose">
-            <Ph>
-              [A second paragraph about how the agency grew, and what you
-              refused to compromise on as it did.]
-            </Ph>
-          </p>
+      <section className="band band--vapor">
+        <div className="shell">
+          <Statements />
         </div>
       </section>
 

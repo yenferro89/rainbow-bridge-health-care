@@ -5,6 +5,7 @@ import ServiceGrid from "../components/ServiceGrid.jsx";
 import ProofStrip from "../components/ProofStrip.jsx";
 import ScrollReveal from "../reactbits/ScrollReveal.jsx";
 import { useReducedMotion } from "../lib/useReducedMotion.js";
+import { serviceAreas } from "../config/site.js";
 
 const THESIS =
   "A rainbow is what happens when light passes through water and comes out in order. That is the work: taking a week that feels like nothing but noise and handing it back to you arranged, so you know what happens next.";
@@ -16,14 +17,14 @@ export default function Home() {
     <>
       <Seo
         title="In-home care for the people you love"
-        description="Personal care, respite, homemaker and companion services delivered at home across Central Florida."
+        description="Personal care, homemaker and companion, personal support, life skills development and respite — delivered at home across Orange, Osceola, Seminole and Brevard counties."
       />
 
       <Hero
         eyebrow="In-home care · Central Florida"
-        title="Care for your loved one, in the home they"
-        accent="know."
-        lede="Familiar rooms. Familiar routines. A caregiver who learns how your mother takes her tea, and shows up when she said she would."
+        eyebrowSub={serviceAreas.map((c) => c).join(" · ")}
+        title="Because caring is more than helping — it is serving from the"
+        accent="heart."
         actions={
           <>
             <Link to="/contact" className="btn btn--primary">
@@ -62,13 +63,6 @@ export default function Home() {
         <div className="shell">
           <div className="section-head">
             <p className="eyebrow section-head__eyebrow">What we do</p>
-            <h2 className="display section-head__title">
-              Six ways we show up at the front door
-            </h2>
-            <p className="section-head__lede">
-              Most families start with one of these and add another later. You
-              are never locked into a plan you have outgrown.
-            </p>
           </div>
 
           <ServiceGrid />
@@ -86,7 +80,7 @@ export default function Home() {
           <div className="section-head">
             <p className="eyebrow section-head__eyebrow">Why families stay</p>
             <h2 className="display section-head__title">
-              Twenty years of showing up
+              Ten years of showing up
             </h2>
           </div>
           <ProofStrip />

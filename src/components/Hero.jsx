@@ -9,6 +9,7 @@ import { useReducedMotion } from "../lib/useReducedMotion.js";
  */
 export default function Hero({
   eyebrow,
+  eyebrowSub,
   title,
   accent,
   lede,
@@ -25,7 +26,12 @@ export default function Hero({
       <div className="hero__veil" aria-hidden="true" />
 
       <div className="shell hero__content">
-        {eyebrow && <p className="eyebrow hero__eyebrow">{eyebrow}</p>}
+        {eyebrow && (
+          <p className={`eyebrow hero__eyebrow${eyebrowSub ? " hero__eyebrow--tight" : ""}`}>
+            {eyebrow}
+          </p>
+        )}
+        {eyebrowSub && <p className="hero__areas">{eyebrowSub}</p>}
 
         <h1 className="display hero__title">
           {reduced ? (

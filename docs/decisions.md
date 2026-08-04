@@ -13,6 +13,13 @@ decision lived in. A decision reversed in conversation but not in the docs will 
 
 ---
 
+## 2026-08-03 — Build in the site's own vocabulary, not generic AI layout
+Owner instruction, given after a Vision/Mission block was first built as a plain two-column card
+grid. That block was rebuilt using the existing hairline `.services` grid with two spectrum bands
+and `AnimatedContent`, which is the site's established idiom. **Rejected:** inventing new
+component patterns when an existing one fits. React Bits was vendored deliberately (see
+2026-07-28) and should be used. **Stands** — hard constraint in `CLAUDE.md`.
+
 ## 2026-08-03 — Site stays English-only
 The client annotates in Spanish because she is a Spanish speaker. That is not a request for a
 Spanish or bilingual site, and it should not be read as one. **Stands.**

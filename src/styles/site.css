@@ -324,15 +324,16 @@ a {
 /* The logo has a white cloud body, so on the dark hero it needs no plate —
    it reads as a cloud against dusk, which is exactly right. */
 /* The logo carries three levels of type inside it, so it needs real height to
-   stay legible — below about 50px the tagline turns to mush. */
+   stay legible — below about 50px the tagline turns to mush. Enlarged
+   2026-08-03 at the client's request so the central artwork reads properly. */
 .brand__logo {
   width: auto;
-  height: clamp(50px, 7vw, 76px);
+  height: clamp(64px, 9vw, 98px);
   transition: height 0.4s var(--ease-out);
 }
 
 .masthead.is-stuck .brand__logo {
-  height: clamp(44px, 5.5vw, 60px);
+  height: clamp(54px, 6.8vw, 76px);
 }
 
 .nav {
@@ -739,6 +740,20 @@ a {
   flex-shrink: 0;
 }
 
+/* Counties served, sitting under the eyebrow. Indented to line up past the
+   eyebrow's gradient rule rather than under it. */
+.hero__eyebrow--tight {
+  margin-bottom: 0.45rem;
+}
+
+.hero__areas {
+  color: var(--on-dark-soft);
+  font-size: var(--step--1);
+  letter-spacing: 0.05em;
+  margin-bottom: clamp(1.2rem, 3vw, 2rem);
+  padding-left: calc(clamp(28px, 5vw, 64px) + 0.8rem);
+}
+
 .hero__title {
   font-size: var(--step-5);
   color: #fff;
@@ -875,10 +890,31 @@ a {
    Services — plain list, no cards. Structure comes from the hairline grid.
    -------------------------------------------------------------------------- */
 
-/* Explicit column counts rather than auto-fit. With six services, auto-fit
-   lands on four columns at desktop width and leaves two empty cells showing
-   the container's hairline colour as a stray lavender block. Fixed counts of
-   1 / 2 / 3 always divide six exactly. */
+/* Services are grouped into three named categories of 2 / 1 / 3. Column counts
+   come from --service-cols, set per group by ServiceGrid from the group's own
+   length. Auto-fit — or any fixed count — leaves empty cells in the short
+   groups, and an empty cell renders as a stray lavender block because the gap
+   is the container's background showing through. */
+.service-groups {
+  display: grid;
+  gap: clamp(2.5rem, 5vw, 4rem);
+}
+
+.service-group__name {
+  font-family: var(--display);
+  font-variation-settings: "SOFT" 70, "WONK" 0, "opsz" 40;
+  font-size: var(--step-1);
+  font-weight: 500;
+  line-height: 1.15;
+  letter-spacing: -0.015em;
+  margin-bottom: 1.25rem;
+}
+
+.band--dusk .service-group__name,
+.band--twilight .service-group__name {
+  color: var(--on-dark);
+}
+
 .services {
   display: grid;
   grid-template-columns: 1fr;
@@ -889,13 +925,13 @@ a {
 
 @media (min-width: 40rem) {
   .services {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-columns: repeat(var(--service-cols-sm, 2), minmax(0, 1fr));
   }
 }
 
 @media (min-width: 64rem) {
   .services {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
+    grid-template-columns: repeat(var(--service-cols, 3), minmax(0, 1fr));
   }
 }
 
@@ -962,6 +998,53 @@ a {
 
 .band--dusk .service__body,
 .band--twilight .service__body {
+  color: var(--on-dark-soft);
+}
+
+/* Homemaker & Companion carries two labelled lists under its body copy. */
+.service__sublist {
+  margin-top: 0.35rem;
+}
+
+.service__sublist-heading {
+  font-size: var(--step--1);
+  font-weight: 600;
+  color: var(--ink);
+  margin-bottom: 0.3rem;
+}
+
+.service__sublist ul {
+  list-style: none;
+  display: grid;
+  gap: 0.28rem;
+}
+
+.service__sublist li {
+  font-size: var(--step--1);
+  color: var(--ink-soft);
+  line-height: 1.5;
+  padding-left: 0.95rem;
+  position: relative;
+}
+
+.service__sublist li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0.62em;
+  width: 0.32rem;
+  height: 0.32rem;
+  border-radius: 50%;
+  background: var(--service-band, var(--iris));
+}
+
+.band--dusk .service__sublist-heading,
+.band--twilight .service__sublist-heading {
+  color: var(--on-dark);
+}
+
+.band--dusk .service__sublist li,
+.band--twilight .service__sublist li {
   color: var(--on-dark-soft);
 }
 

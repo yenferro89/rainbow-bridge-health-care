@@ -8,7 +8,7 @@ export default function Services() {
     <>
       <Seo
         title="Services"
-        description="Personal care, respite, homemaker and companion services, supported living coaching and life skills development at home."
+        description="Long term care, personal care services under 21 and Medicaid waiver services — personal care, homemaker and companion, personal support, life skills development and respite — at home across Orange, Osceola, Seminole and Brevard counties."
       />
 
       <Hero
