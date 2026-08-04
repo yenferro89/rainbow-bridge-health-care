@@ -13,6 +13,16 @@ decision lived in. A decision reversed in conversation but not in the docs will 
 
 ---
 
+## 2026-08-03 — Site stays English-only
+The client annotates in Spanish because she is a Spanish speaker. That is not a request for a
+Spanish or bilingual site, and it should not be read as one. **Stands.**
+
+## 2026-08-03 — Client supplied real business details; placeholders start coming out
+First real facts received (address, phones, email, Homemaker & Companion licence 240078). See
+`docs/client-feedback-2026-07-29.md` §5. The never-invent-business-facts constraint is unchanged —
+what changed is that some blanks can now be filled from a real source. Anything still unanswered
+stays bracketed and highlighted. **Stands.**
+
 ## 2026-08-03 — Repo stays public; going private was considered and rejected
 Raised because this is client work and the repo records an unfinished pre-launch state.
 **Rejected** on cost/benefit: GitHub Pages does not serve private repos on the free plan, so
