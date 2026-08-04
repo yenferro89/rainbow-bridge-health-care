@@ -50,14 +50,12 @@ export default function Contact() {
             <div>
               <div className="section-head">
                 <p className="eyebrow section-head__eyebrow">Start here</p>
+                {/* OPEN (Q5): the client struck the old heading but only
+                    "…your loved one" was legible above the page break, so the
+                    replacement wording is still to come. */}
                 <h2 className="display section-head__title">
-                  Tell us about your loved one
+                  Request service
                 </h2>
-                <p className="section-head__lede">
-                  There are no wrong answers, and nothing here commits you to
-                  anything. The more you can tell us, the more useful our first
-                  call will be.
-                </p>
               </div>
               <ContactForm />
             </div>
@@ -79,6 +77,28 @@ export default function Contact() {
                       <Ph>{contact.afterHoursPhone}</Ph>
                     </a>
                   </p>
+                </div>
+
+                <div className="detail">
+                  <p className="detail__label">Phone</p>
+                  <div className="hours">
+                    <div className="hours__row">
+                      <span className="hours__day">Office</span>
+                      <span className="hours__time">
+                        <a href={contact.phoneHref}>{contact.phone}</a>
+                      </span>
+                    </div>
+                    <div className="hours__row">
+                      <span className="hours__day">Mobile — text or call</span>
+                      <span className="hours__time">
+                        <a href={contact.mobilePhoneHref}>{contact.mobilePhone}</a>
+                      </span>
+                    </div>
+                    <div className="hours__row">
+                      <span className="hours__day">eFax</span>
+                      <span className="hours__time">{contact.eFax}</span>
+                    </div>
+                  </div>
                 </div>
 
                 <div className="detail">

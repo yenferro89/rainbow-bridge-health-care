@@ -30,24 +30,23 @@ While `settings.highlightPlaceholders` is `true`, every unreplaced value shows
 with a yellow highlight on the live site, so nothing slips through. Work down
 the file until no highlights remain, then set that flag to `false`.
 
-The values waiting on you:
+Real details arrived from the client on 2026-07-29 and are now in — address,
+office and mobile numbers, eFax, email, the Homemaker & Companion licence, the
+services, and the About copy. See `docs/client-feedback-2026-07-29.md`.
+
+Still waiting:
 
 | Where | What |
 |---|---|
-| `contact.phone` / `phoneHref` | Main number |
-| `contact.afterHoursPhone` | After-hours line, or delete the block |
-| `contact.email` / `emailHref` | Enquiries address |
-| `contact.address` | Street, city, state, ZIP |
+| `contact.afterHoursPhone` | After-hours line, the mobile, or delete the block |
 | `contact.mapEmbedSrc` | Google Maps embed URL (empty shows a placeholder panel) |
-| `contact.hours` | Opening hours |
-| `credentials` | HHA licence, HMK/COMP licence, accreditation |
-| `proofPoints` | Years, families served, caregivers, time to first visit |
-| `services` | Confirm which service lines your licences actually cover, delete the rest |
+| `contact.hours` | Client ticked the layout but the values are still bracketed — confirm them |
+| `credentials` | Nurse Registry licence number once issued; accreditation line to confirm or delete |
+| `proofPoints` | Families served, caregivers, time to first visit — never verified by anyone |
 | `site.url` | Final domain |
 
-Two pages also carry inline placeholders that are not in the config file:
+One page still carries inline placeholders that are not in the config file:
 
-- `src/pages/About.jsx` — the founding story
 - `src/pages/Privacy.jsx` and `src/pages/Terms.jsx` — sections marked for counsel
 
 ### 2. Wire up Brevo
@@ -60,10 +59,12 @@ site.
 2. Add the contact attributes the form sends, under
    **Contacts → Settings → Contact attributes**:
 
-   `FIRSTNAME` · `LASTNAME` · `EMAIL` · `SMS` · `RELATIONSHIP` ·
-   `INQUIRY_TYPE` · `URGENCY` · `PREFERRED_CONTACT` · `MESSAGE`
+   `FIRSTNAME` · `LASTNAME` · `EMAIL` · `SMS` · `DOB` · `GUARDIAN` ·
+   `ADDRESS` · `INQUIRY_TYPE` · `URGENCY` · `PREFERRED_CONTACT` ·
+   `SERVICES_NEEDED` · `SCHEDULE` · `MESSAGE`
 
    The first four usually exist already. Create the rest as text attributes.
+   `SERVICES_NEEDED` arrives as a comma-separated list.
 3. Publish the form, open **Share**, and copy its action URL — it looks like
    `https://sibforms.com/serve/MUIFAJ...`
 4. Paste that into `brevo.formAction` in `src/config/site.js`.

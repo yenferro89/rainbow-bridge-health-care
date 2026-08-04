@@ -2,6 +2,7 @@ import { useEffect } from "react";
 import { Routes, Route, useLocation } from "react-router-dom";
 import Masthead from "./components/Masthead.jsx";
 import Footer from "./components/Footer.jsx";
+import StructuredData from "./components/StructuredData.jsx";
 import Home from "./pages/Home.jsx";
 import Contact from "./pages/Contact.jsx";
 import Services from "./pages/Services.jsx";
@@ -25,6 +26,7 @@ export default function App() {
         Skip to main content
       </a>
       <ScrollToTop />
+      <StructuredData />
       <Masthead />
       <main id="main">
         <Routes>

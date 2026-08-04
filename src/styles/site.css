@@ -1228,6 +1228,47 @@ select.field__input {
   color: var(--ink-faint);
 }
 
+/* A quiet rule-and-label marking a group of fields, e.g. "Client". */
+.form__section {
+  font-size: var(--step--1);
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--iris);
+  padding-bottom: 0.6rem;
+  border-bottom: 1px solid rgba(104, 48, 144, 0.18);
+}
+
+.fieldset {
+  border: 0;
+  padding: 0;
+  margin: 0;
+  min-width: 0;
+}
+
+.fieldset > .field__label {
+  margin-bottom: 0.6rem;
+}
+
+.checks {
+  display: grid;
+  gap: 0.7rem;
+}
+
+.checks--inline {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.25rem;
+}
+
+.checks--inline .check {
+  align-items: center;
+}
+
+.fieldset.has-error .check__box {
+  border-color: var(--band-red);
+}
+
 /* Checkbox */
 .check {
   display: grid;

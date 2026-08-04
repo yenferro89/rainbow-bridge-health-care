@@ -192,6 +192,19 @@ export const urgencyOptions = [
   "Just gathering information",
 ];
 
+/**
+ * "Services Needed (check all that apply)" on the request form. The client's
+ * own list and wording, 2026-07-29 — note "Personal Supports" is plural here,
+ * which is how she wrote it.
+ */
+export const serviceOptions = [
+  "Personal Care Services",
+  "Respite Care Services",
+  "Personal Supports",
+  "Life Skills Development Level 1",
+  "Homemaker & Companion",
+];
+
 /* ==========================================================================
    BREVO
    --------------------------------------------------------------------------
@@ -204,7 +217,8 @@ export const urgencyOptions = [
         attributes) so the data has somewhere to land:
           EMAIL (already exists)   FIRSTNAME (already exists)
           LASTNAME (already exists)  SMS or PHONE
-          RELATIONSHIP   INQUIRY_TYPE   URGENCY   MESSAGE   PREFERRED_CONTACT
+          DOB   GUARDIAN   ADDRESS   INQUIRY_TYPE   URGENCY
+          PREFERRED_CONTACT   SERVICES_NEEDED   SCHEDULE   MESSAGE
      3. Publish the form, open "Share" -> copy the form's action URL. It looks
         like https://sibforms.com/serve/MUIFAJ...
      4. Paste it into formAction below.
@@ -222,12 +236,16 @@ export const brevo = {
   fields: {
     firstName: "FIRSTNAME",
     lastName: "LASTNAME",
+    dateOfBirth: "DOB",
+    guardian: "GUARDIAN",
+    address: "ADDRESS",
     email: "EMAIL",
     phone: "SMS",
-    relationship: "RELATIONSHIP",
     inquiryType: "INQUIRY_TYPE",
     urgency: "URGENCY",
     preferredContact: "PREFERRED_CONTACT",
+    servicesNeeded: "SERVICES_NEEDED",
+    schedule: "SCHEDULE",
     message: "MESSAGE",
   },
 

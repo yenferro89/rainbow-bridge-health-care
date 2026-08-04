@@ -13,6 +13,21 @@ decision lived in. A decision reversed in conversation but not in the docs will 
 
 ---
 
+## 2026-08-03 — Consent tickbox removed; disclosure kept as text
+The client struck the "yes, you may contact me" checkbox on the request form. Removed as asked.
+The disclosure itself was kept as plain text under the send button — *"By sending this you agree
+that a member of the care team may contact you about it — we never sell your details, and you can
+ask us to stop at any time."* **Rejected:** dropping the notice entirely along with the checkbox.
+Losing a step in the form is a UX call that is hers to make; losing the disclosure on a healthcare
+enquiry form is a different kind of decision, and the text costs nothing. Worth raising with
+counsel during the Privacy/Terms review.
+
+## 2026-08-03 — Structured data only ever emits confirmed values
+Added `LocalBusiness` / `HomeHealthCareService` schema with `areaServed` for the four counties.
+It skips any `[BRACKETED]` value rather than publishing it. Asserting a fake address to Google is
+worse than having no structured data, and the never-invent-facts rule applies to machines reading
+the site as much as to people. **Stands.**
+
 ## 2026-08-03 — The bar is "expensive, not boring, not AI"
 Owner instruction, given after a Vision/Mission block was first built as a plain two-column card
 grid. That block was rebuilt using the existing hairline `.services` grid with two spectrum bands

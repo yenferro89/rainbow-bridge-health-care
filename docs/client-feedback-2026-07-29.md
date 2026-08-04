@@ -8,8 +8,16 @@ Annotations are in Spanish; English here is the working translation.
 that is not a request for a Spanish or bilingual site. Do not read the annotation language as a
 localisation requirement.
 
-**Status: transcribed, not yet implemented.** Open questions at the bottom must be answered
-before the affected parts are built — several are business facts we are not allowed to invent.
+**Status: implemented 2026-08-03, apart from the open questions at the bottom.** Everything not
+blocked by a business fact we are not allowed to invent has been built. What remains is listed in
+the open-questions table — answer those and the rest can go in.
+
+Not yet done, and why:
+- **Service photos** — needs Q6.
+- **County pages** — needs the Q7 scope decision. Counties are live in the hero, footer, meta
+  descriptions and the new `LocalBusiness` schema, but there are no per-county pages yet.
+- **Request Service heading** — placeholder wording ("Request service") is in until Q5.
+- **Hours, after-hours number, accreditation line, Nurse Registry number** — still bracketed.
 
 ---
 

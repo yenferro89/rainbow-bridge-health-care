@@ -1,18 +1,27 @@
 import { useRef, useState } from "react";
-import { brevo, inquiryTypes, urgencyOptions, contact } from "../config/site.js";
+import {
+  brevo,
+  inquiryTypes,
+  urgencyOptions,
+  serviceOptions,
+  contact,
+} from "../config/site.js";
 import Ph from "./Ph.jsx";
 
 const EMPTY = {
   firstName: "",
   lastName: "",
+  dateOfBirth: "",
+  guardian: "",
+  address: "",
   email: "",
   phone: "",
-  relationship: "",
   inquiryType: "",
   urgency: "",
   preferredContact: "Phone call",
+  servicesNeeded: [],
+  schedule: "",
   message: "",
-  consent: false,
 };
 
 /** Deliberately permissive. Rejecting a real address is worse than accepting a typo. */
@@ -26,10 +35,17 @@ function validate(values) {
 
   if (!values.firstName.trim()) errors.firstName = "Enter a first name.";
   if (!values.lastName.trim()) errors.lastName = "Enter a last name.";
+  if (!values.dateOfBirth.trim()) errors.dateOfBirth = "Enter a date of birth.";
+  if (!values.guardian.trim()) {
+    errors.guardian = "Enter the parent or legal guardian's full name.";
+  }
+  if (!values.address.trim()) {
+    errors.address = "Enter the full address, including the county.";
+  }
 
-  if (!values.email.trim()) {
-    errors.email = "Enter an email address so we can reply.";
-  } else if (!EMAIL_RE.test(values.email.trim())) {
+  // Email is optional here — the client asked for it. Only validate a value
+  // that was actually typed.
+  if (values.email.trim() && !EMAIL_RE.test(values.email.trim())) {
     errors.email = "That address is missing an @ or a domain.";
   }
 
@@ -40,8 +56,8 @@ function validate(values) {
   }
 
   if (!values.inquiryType) errors.inquiryType = "Choose what you need help with.";
-  if (!values.consent) {
-    errors.consent = "Please agree to be contacted so we can respond.";
+  if (!values.servicesNeeded.length) {
+    errors.servicesNeeded = "Choose at least one service.";
   }
 
   return errors;
@@ -56,6 +72,26 @@ export default function ContactForm() {
   const honeypotRef = useRef(null);
 
   const previewMode = !brevo.formAction;
+
+  const clearError = (name) =>
+    setErrors((prev) => {
+      if (!prev[name]) return prev;
+      const next = { ...prev };
+      delete next[name];
+      return next;
+    });
+
+  /** Services Needed is a multi-select, so it toggles into an array. */
+  const toggleService = (option) => (e) => {
+    const on = e.target.checked;
+    setValues((v) => ({
+      ...v,
+      servicesNeeded: on
+        ? [...v.servicesNeeded, option]
+        : v.servicesNeeded.filter((s) => s !== option),
+    }));
+    clearError("servicesNeeded");
+  };
 
   const update = (name) => (e) => {
     const value = e.target.type === "checkbox" ? e.target.checked : e.target.value;
@@ -108,12 +144,16 @@ export default function ContactForm() {
       const body = new FormData();
       body.append(f.firstName, values.firstName.trim());
       body.append(f.lastName, values.lastName.trim());
+      body.append(f.dateOfBirth, values.dateOfBirth.trim());
+      body.append(f.guardian, values.guardian.trim());
+      body.append(f.address, values.address.trim());
       body.append(f.email, values.email.trim());
       body.append(f.phone, values.phone.trim());
-      body.append(f.relationship, values.relationship.trim());
       body.append(f.inquiryType, values.inquiryType);
       body.append(f.urgency, values.urgency);
       body.append(f.preferredContact, values.preferredContact);
+      body.append(f.servicesNeeded, values.servicesNeeded.join(", "));
+      body.append(f.schedule, values.schedule.trim());
       body.append(f.message, values.message.trim());
       body.append(brevo.honeypotField, "");
       body.append("locale", brevo.locale);
@@ -230,6 +270,8 @@ export default function ContactForm() {
         </p>
       </div>
 
+      <p className="form__section">Client</p>
+
       <div className="form__row form__row--split">
         <Field
           name="firstName"
@@ -251,17 +293,51 @@ export default function ContactForm() {
         />
       </div>
 
+      <Field
+        name="dateOfBirth"
+        label="Date of birth"
+        value={values.dateOfBirth}
+        error={errors.dateOfBirth}
+        onChange={update("dateOfBirth")}
+        autoComplete="bday"
+        placeholder="MM / DD / YYYY"
+        required
+      />
+
+      <Field
+        name="guardian"
+        label="Parent or legal guardian"
+        value={values.guardian}
+        error={errors.guardian}
+        onChange={update("guardian")}
+        placeholder="First and last name"
+        required
+      />
+
+      <Field
+        name="address"
+        as="textarea"
+        label="Full address, including county"
+        value={values.address}
+        error={errors.address}
+        onChange={update("address")}
+        autoComplete="street-address"
+        placeholder="Street, city, state, ZIP — and which county"
+        rows={3}
+        required
+      />
+
       <div className="form__row form__row--split">
         <Field
           name="email"
           type="email"
           label="Email"
+          optional
           value={values.email}
           error={errors.email}
           onChange={update("email")}
           autoComplete="email"
           inputMode="email"
-          required
         />
         <Field
           name="phone"
@@ -276,16 +352,6 @@ export default function ContactForm() {
           required
         />
       </div>
-
-      <Field
-        name="relationship"
-        label="Who is the care for?"
-        optional
-        value={values.relationship}
-        error={errors.relationship}
-        onChange={update("relationship")}
-        placeholder="My mother, my husband, myself…"
-      />
 
       <div className="form__row form__row--split">
         <Field
@@ -323,13 +389,11 @@ export default function ContactForm() {
         </Field>
       </div>
 
-      <fieldset style={{ border: 0, padding: 0, margin: 0 }}>
-        <legend className="field__label" style={{ marginBottom: "0.6rem" }}>
-          How should we reach you?
-        </legend>
-        <div style={{ display: "flex", flexWrap: "wrap", gap: "1.25rem" }}>
+      <fieldset className="fieldset">
+        <legend className="field__label">How should we reach you?</legend>
+        <div className="checks checks--inline">
           {["Phone call", "Text message", "Email"].map((opt) => (
-            <label className="check" key={opt} style={{ alignItems: "center" }}>
+            <label className="check" key={opt}>
               <input
                 className="check__box"
                 type="radio"
@@ -344,42 +408,64 @@ export default function ContactForm() {
         </div>
       </fieldset>
 
+      <fieldset
+        className={`fieldset${errors.servicesNeeded ? " has-error" : ""}`}
+        aria-describedby={errors.servicesNeeded ? "services-error" : undefined}
+      >
+        <legend className="field__label">Services needed</legend>
+        <p className="field__hint" style={{ marginBottom: "0.75rem" }}>
+          Check all that apply.
+        </p>
+
+        <div className="checks">
+          {serviceOptions.map((opt) => (
+            <label className="check" key={opt}>
+              <input
+                className="check__box"
+                type="checkbox"
+                name="servicesNeeded"
+                value={opt}
+                checked={values.servicesNeeded.includes(opt)}
+                onChange={toggleService(opt)}
+              />
+              <span className="check__text">{opt}</span>
+            </label>
+          ))}
+        </div>
+
+        {errors.servicesNeeded && (
+          <span
+            className="field__error"
+            id="services-error"
+            role="alert"
+            style={{ display: "flex", marginTop: "0.5rem" }}
+          >
+            {errors.servicesNeeded}
+          </span>
+        )}
+      </fieldset>
+
+      <Field
+        name="schedule"
+        as="textarea"
+        label="Which days and times are you requesting services?"
+        value={values.schedule}
+        error={errors.schedule}
+        onChange={update("schedule")}
+        placeholder="For example: Monday–Friday 2pm–5pm, Saturdays 1pm–6pm"
+        rows={3}
+      />
+
       <Field
         name="message"
         as="textarea"
-        label="Tell us what's happening"
+        label="Additional comments"
         optional
         value={values.message}
         error={errors.message}
         onChange={update("message")}
-        placeholder="What does a typical day look like right now? What worries you most?"
-        rows={5}
+        rows={4}
       />
-
-      <div className={`check${errors.consent ? " has-error" : ""}`}>
-        <input
-          className="check__box"
-          type="checkbox"
-          id="consent"
-          name="consent"
-          checked={values.consent}
-          onChange={update("consent")}
-          aria-describedby={errors.consent ? "consent-error" : undefined}
-          aria-invalid={errors.consent ? "true" : undefined}
-        />
-        <span>
-          <label className="check__text" htmlFor="consent">
-            Yes, a member of the Rainbow Bridge care team may contact me about
-            this enquiry. We never sell your details, and you can ask us to stop
-            at any time.
-          </label>
-          {errors.consent && (
-            <span className="field__error" id="consent-error" role="alert" style={{ display: "flex", marginTop: "0.4rem" }}>
-              {errors.consent}
-            </span>
-          )}
-        </span>
-      </div>
 
       {/* Brevo's bot trap. Off-screen rather than hidden, so bots still fill it. */}
       <div className="hp-field" aria-hidden="true">
@@ -419,8 +505,12 @@ export default function ContactForm() {
           <span className="spinner" aria-hidden="true" />
           {state === "submitting" ? "Sending…" : "Send message"}
         </button>
+        {/* The client asked for the consent tickbox to go. Keeping the notice
+            as plain text preserves the disclosure without the extra step. */}
         <p className="field__hint" style={{ marginTop: "0.85rem" }}>
-          We reply to every message within one business day.
+          We reply to every message within one business day. By sending this you
+          agree that a member of the care team may contact you about it — we
+          never sell your details, and you can ask us to stop at any time.
         </p>
       </div>
     </form>
