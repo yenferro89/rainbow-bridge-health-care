@@ -200,6 +200,7 @@ export const serviceCategories = [
     services: [
       {
         name: "Personal Care",
+        slug: "personal-care",
         image: "img/services/personal-care.jpg",
         image2x: "img/services/personal-care@2x.jpg",
         alt: "A caregiver holding an older woman's hands in her own living room",
@@ -208,6 +209,7 @@ export const serviceCategories = [
       },
       {
         name: "Homemaker & Companion",
+        slug: "homemaker-companion",
         image: "img/services/homemaker-companion.jpg",
         image2x: "img/services/homemaker-companion@2x.jpg",
         alt: "A caregiver bringing a meal through to a smiling older woman at her kitchen table",
@@ -242,6 +244,7 @@ export const serviceCategories = [
     services: [
       {
         name: "Personal Care Service (PCS) Under 21",
+        slug: "pcs-under-21",
         image: "img/services/pcs-under-21.jpg",
         image2x: "img/services/pcs-under-21@2x.jpg",
         alt: "A young boy in supportive seating reaching for a sensory ball held out to him",
@@ -255,6 +258,7 @@ export const serviceCategories = [
     services: [
       {
         name: "Personal Support",
+        slug: "personal-support",
         image: "img/services/personal-support.jpg",
         image2x: "img/services/personal-support@2x.jpg",
         alt: "A caregiver steadying an older man as he stands from his sofa with a walking stick",
@@ -265,6 +269,7 @@ export const serviceCategories = [
         // OPEN: the client abbreviated this both "LSD1" and "LDS1". Spelled out
         // in full until she confirms which is correct.
         name: "Life Skills Development Level 1",
+        slug: "life-skills-development",
         image: "img/services/life-skills.jpg",
         image2x: "img/services/life-skills@2x.jpg",
         alt: "A woman working through a book at the table with a girl with Down syndrome",
@@ -273,6 +278,7 @@ export const serviceCategories = [
       },
       {
         name: "Respite",
+        slug: "respite",
         image: "img/services/respite.jpg",
         image2x: "img/services/respite@2x.jpg",
         alt: "A couple sitting together on their sofa at home, laughing",
@@ -283,8 +289,11 @@ export const serviceCategories = [
   },
 ];
 
-/** Flat list, derived. Used by the footer nav and anywhere order-only matters. */
-export const services = serviceCategories.flatMap((c) => c.services);
+/** Flat list, derived. Each entry keeps the category it belongs to, so a detail
+ *  page can name the programme it sits under without another lookup. */
+export const services = serviceCategories.flatMap((c) =>
+  c.services.map((s) => ({ ...s, category: c.name }))
+);
 
 /** Options shown in the contact form's "what do you need" field. */
 export const inquiryTypes = [

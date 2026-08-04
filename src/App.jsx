@@ -3,9 +3,11 @@ import { Routes, Route, useLocation } from "react-router-dom";
 import Masthead from "./components/Masthead.jsx";
 import Footer from "./components/Footer.jsx";
 import StructuredData from "./components/StructuredData.jsx";
+import Canonical from "./components/Canonical.jsx";
 import Home from "./pages/Home.jsx";
 import Contact from "./pages/Contact.jsx";
 import Services from "./pages/Services.jsx";
+import Service from "./pages/Service.jsx";
 import ServiceAreas from "./pages/ServiceAreas.jsx";
 import ServiceArea from "./pages/ServiceArea.jsx";
 import About from "./pages/About.jsx";
@@ -31,11 +33,13 @@ export default function App() {
       </a>
       <ScrollToTop />
       <StructuredData />
+      <Canonical />
       <Masthead />
       <main id="main">
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/services" element={<Services />} />
+          <Route path="/services/:slug" element={<Service />} />
           <Route path="/service-areas" element={<ServiceAreas />} />
           <Route path="/service-areas/:slug" element={<ServiceArea />} />
           <Route path="/about" element={<About />} />

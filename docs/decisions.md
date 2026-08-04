@@ -28,6 +28,21 @@ It skips any `[BRACKETED]` value rather than publishing it. Asserting a fake add
 worse than having no structured data, and the never-invent-facts rule applies to machines reading
 the site as much as to people. **Stands.**
 
+## 2026-08-04 — Per-service pages, sitemap, robots and canonicals
+A full crawl found the footer's five "Care at home" links all pointing at `/services` — 86 links
+across the site landing on one page. Individual service pages are what people actually search for
+("respite care Orlando", "personal support Medicaid waiver"), so each service now has its own page
+at `/services/<slug>` with its own title, description, photograph, copy and cross-links.
+
+Also missing entirely and now added: `sitemap.xml`, `robots.txt`, and `<link rel="canonical">` on
+every route. The sitemap and robots are **generated at build time from the same ROUTES array**
+that emits the real HTML files, so they cannot drift from the pages that exist — a hand-maintained
+sitemap always eventually lies. Canonicals matter here because this is a client-rendered SPA where
+every route serves the same shell; the county and service pages share layout and differ mainly in
+copy, which is exactly the shape Google treats as duplicate.
+
+**Stands.**
+
 ## 2026-08-03 — About rebuilt; Vision/Mission regression fixed
 The services rebuild replaced the `.services`/`.service` CSS, but About's Vision and Mission were
 still using those class names — so both rendered completely unstyled on the live site for several

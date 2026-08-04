@@ -1,6 +1,6 @@
 import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
-import { copyFileSync, existsSync, mkdirSync } from "node:fs";
+import { copyFileSync, existsSync, mkdirSync, writeFileSync } from "node:fs";
 import { resolve } from "node:path";
 
 /**
@@ -21,6 +21,15 @@ const COUNTY_SLUGS = [
   "brevard-county",
 ];
 
+const SERVICE_SLUGS = [
+  "personal-care",
+  "homemaker-companion",
+  "pcs-under-21",
+  "personal-support",
+  "life-skills-development",
+  "respite",
+];
+
 const ROUTES = [
   "contact",
   "services",
@@ -31,6 +40,7 @@ const ROUTES = [
   "non-discrimination",
   "service-areas",
   ...COUNTY_SLUGS.map((s) => `service-areas/${s}`),
+  ...SERVICE_SLUGS.map((s) => `services/${s}`),
 ];
 
 /**
@@ -52,6 +62,28 @@ function githubPagesRoutes() {
       if (!existsSync(index)) return;
 
       copyFileSync(index, resolve("dist/404.html"));
+
+      // sitemap.xml and robots.txt are generated from ROUTES above rather than
+      // maintained by hand, so they cannot drift from the pages that exist.
+      const origin = (process.env.SITE_ORIGIN ?? "https://yenferro89.github.io").replace(/\/$/, "");
+      const prefix = `${origin}${base}`.replace(/\/$/, "");
+      const urls = ["", ...ROUTES]
+        .map((r) => {
+          // Landing pages first, deeper pages slightly lower.
+          const priority = r === "" ? "1.0" : r.includes("/") ? "0.7" : "0.8";
+          return `  <url>\n    <loc>${prefix}/${r}</loc>\n    <changefreq>monthly</changefreq>\n    <priority>${priority}</priority>\n  </url>`;
+        })
+        .join("\n");
+
+      writeFileSync(
+        resolve("dist/sitemap.xml"),
+        `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${urls}\n</urlset>\n`
+      );
+
+      writeFileSync(
+        resolve("dist/robots.txt"),
+        `User-agent: *\nAllow: /\n\nSitemap: ${prefix}/sitemap.xml\n`
+      );
 
       for (const route of ROUTES) {
         const dir = resolve(`dist/${route}`);

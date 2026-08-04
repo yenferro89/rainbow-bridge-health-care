@@ -44,9 +44,9 @@ export default function Footer() {
           <div>
             <h2 className="footer__heading">Care at home</h2>
             <ul className="footer__list">
-              {services.slice(0, 5).map((s) => (
-                <li key={s.name}>
-                  <Link to="/services">{s.name}</Link>
+              {services.map((s) => (
+                <li key={s.slug}>
+                  <Link to={`/services/${s.slug}`}>{s.name}</Link>
                 </li>
               ))}
             </ul>

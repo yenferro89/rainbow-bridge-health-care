@@ -3,6 +3,7 @@ import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { serviceCategories } from "../config/site.js";
 import { asset } from "../lib/asset.js";
+import { Link } from "react-router-dom";
 import { useReducedMotion } from "../lib/useReducedMotion.js";
 
 gsap.registerPlugin(ScrollTrigger);
@@ -133,8 +134,18 @@ export default function ServiceGrid() {
                 </div>
 
                 <div className="svc__copy">
-                  <h4 className="svc__name">{s.name}</h4>
+                  <h4 className="svc__name">
+                    <Link className="svc__link" to={`/services/${s.slug}`}>
+                      {s.name}
+                    </Link>
+                  </h4>
                   <p className="svc__body">{s.body}</p>
+
+                  <p className="svc__more">
+                    <Link to={`/services/${s.slug}`}>
+                      More about {s.name}
+                    </Link>
+                  </p>
 
                   {s.lists && (
                     <div className="svc__lists">

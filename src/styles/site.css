@@ -1112,6 +1112,161 @@ a {
 }
 
 /* --------------------------------------------------------------------------
+   Service detail page
+   -------------------------------------------------------------------------- */
+
+.svcpage {
+  display: grid;
+  gap: clamp(2rem, 4vw, 3.5rem);
+  align-items: start;
+}
+
+@media (min-width: 54rem) {
+  .svcpage {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1.05fr);
+  }
+
+  .svcpage__media {
+    position: sticky;
+    top: clamp(7rem, 14vh, 9rem);
+  }
+}
+
+.svcpage__media {
+  position: relative;
+  isolation: isolate;
+}
+
+.svcpage__glow {
+  pointer-events: none;
+  position: absolute;
+  z-index: -1;
+  inset: -14% -10%;
+  background: radial-gradient(
+    56% 56% at 50% 45%,
+    color-mix(in srgb, var(--svcpage-band, var(--iris)) 65%, transparent),
+    transparent 72%
+  );
+  filter: blur(40px);
+  opacity: 0.6;
+}
+
+.svcpage__frame {
+  position: relative;
+  overflow: hidden;
+  border-radius: clamp(18px, 2.2vw, 30px);
+  aspect-ratio: 5 / 4;
+  background: rgba(104, 48, 144, 0.07);
+  box-shadow:
+    0 2px 6px color-mix(in srgb, var(--svcpage-band, var(--iris)) 18%, transparent),
+    0 24px 55px -20px color-mix(in srgb, var(--svcpage-band, var(--iris)) 45%, transparent);
+}
+
+.svcpage__img {
+  position: absolute;
+  inset: -12% 0 0 0;
+  width: 100%;
+  height: 124%;
+  object-fit: cover;
+  will-change: transform;
+}
+
+.svcpage__body {
+  display: grid;
+  gap: 1.5rem;
+}
+
+.svcpage__lead {
+  font-size: var(--step-1);
+  line-height: 1.6;
+  color: var(--ink);
+  text-wrap: pretty;
+}
+
+.svcpage__list-heading {
+  font-size: var(--step--1);
+  font-weight: 600;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  color: var(--svcpage-band, var(--iris));
+  margin-bottom: 0.5rem;
+}
+
+.svcpage__list ul {
+  list-style: none;
+  display: grid;
+  gap: 0.35rem;
+}
+
+.svcpage__list li {
+  color: var(--ink-soft);
+  line-height: 1.55;
+  padding-left: 1.05rem;
+  position: relative;
+}
+
+.svcpage__list li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0.62em;
+  width: 0.36rem;
+  height: 0.36rem;
+  border-radius: 50%;
+  background: var(--svcpage-band, var(--iris));
+}
+
+.svcpage__note {
+  display: grid;
+  gap: 0.9rem;
+  padding-top: 1.4rem;
+  border-top: 1px solid rgba(104, 48, 144, 0.16);
+  color: var(--ink-soft);
+  line-height: 1.65;
+}
+
+.svcpage__note a {
+  color: var(--iris);
+}
+
+/* The service name on /services links through to its own page. */
+.svc__link {
+  text-decoration: none;
+  background-image: linear-gradient(var(--svc-band, var(--iris)), var(--svc-band, var(--iris)));
+  background-repeat: no-repeat;
+  background-position: 0 100%;
+  background-size: 0% 2px;
+  transition: background-size 0.45s var(--ease-out);
+}
+
+.svc__link:hover {
+  background-size: 100% 2px;
+}
+
+.svc__more a {
+  font-size: var(--step--1);
+  font-weight: 600;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  color: var(--svc-band, var(--iris));
+  text-decoration: none;
+}
+
+.svc__more a::after {
+  content: " →";
+  display: inline-block;
+  transition: transform 0.4s var(--ease-out);
+}
+
+.svc__more a:hover::after {
+  transform: translateX(0.35rem);
+}
+
+.crosslinks--wrap {
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 15rem), 1fr));
+}
+
+/* --------------------------------------------------------------------------
    About — the story column, and the vision/mission panels
    -------------------------------------------------------------------------- */
 
