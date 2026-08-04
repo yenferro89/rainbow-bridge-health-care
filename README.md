@@ -22,34 +22,37 @@ Node 18 or newer.
 
 ## Before launch
 
-### 1. Replace the placeholders
-
 **Everything you need to change is in one file: `src/config/site.js`.**
 
-While `settings.highlightPlaceholders` is `true`, every unreplaced value shows
-with a yellow highlight on the live site, so nothing slips through. Work down
-the file until no highlights remain, then set that flag to `false`.
+While `settings.highlightPlaceholders` is `true`, any value still carrying `[BRACKETS]` shows
+highlighted on the live site. Values the client has supplied render plain. Work until no
+highlights remain, then set that flag to `false`.
 
-Real details arrived from the client on 2026-07-29 and are now in — address,
-office and mobile numbers, eFax, email, the Homemaker & Companion licence, the
-services, and the About copy. See `docs/client-feedback-2026-07-29.md`.
-
-Still waiting:
+### 1. Waiting on the client
 
 | Where | What |
 |---|---|
-| `contact.afterHoursPhone` | After-hours line, the mobile, or delete the block |
-| `contact.mapEmbedSrc` | Google Maps embed URL (empty shows a placeholder panel) |
-| `contact.hours` | Client ticked the layout but the values are still bracketed — confirm them |
-| `credentials` | Nurse Registry licence number once issued; accreditation line to confirm or delete |
+| `contact.hours` | She ticked the layout but the four values are still bracketed — confirm them |
+| `contact.afterHoursPhone` | A real after-hours line, the mobile, or delete the block |
+| `credentials` | Nurse Registry number once issued; confirm or delete the accreditation line |
 | `proofPoints` | Families served, caregivers, time to first visit — never verified by anyone |
-| `site.url` | Final domain |
+| `serviceCategories` | Whether the abbreviation is **LSD1** or **LDS1** (spelled out in full for now) |
+| Request Service heading | She struck the old one; the replacement wording never arrived |
+| About page | A real photograph of her or the team. Stock there would read as "our team" |
+| `site.url` | Final domain, once one exists |
 
-One page still carries inline placeholders that are not in the config file:
+Full detail and the rest of her 2026-07-29 markup: `docs/client-feedback-2026-07-29.md`.
 
-- `src/pages/Privacy.jsx` and `src/pages/Terms.jsx` — sections marked for counsel
+### 2. Waiting on counsel
 
-### 2. Wire up Brevo
+All four legal pages carry a review banner and must keep it until an attorney signs off:
+`/privacy`, `/terms`, `/accessibility`, `/non-discrimination`. Counsel also supplies
+`legalUpdated` (the effective date), the Privacy Officer and Civil Rights Coordinator names, the
+venue county in Terms, and which additional languages need a Section 1557 tagline. Two assumptions
+need confirming rather than inheriting: that the agency is a HIPAA covered entity, and that
+Section 1557 applies.
+
+### 3. Wire up Brevo
 
 The form is entirely custom — Brevo only receives the submission. No API key
 ever reaches the browser, which is what makes this safe to host as a static
@@ -81,13 +84,6 @@ request as success and a network failure as an error, but it cannot detect a
 rejection by Brevo. Send yourself a test message after wiring it up, and
 confirm it lands in Brevo before going live.
 
-### 3. Legal review
-
-`Privacy.jsx` and `Terms.jsx` are structurally complete starting points, not
-finished documents. A Notice of Privacy Practices for a Florida home care
-agency has statutory content requirements under 45 CFR §164.520. Have counsel
-complete them.
-
 ---
 
 ## Deploying
@@ -105,7 +101,14 @@ Pushing to `main` builds and publishes automatically via
 
 The site is a single-page app, so `vite.config.js` writes `dist/404.html` as a
 copy of `index.html`. That is what makes a hard refresh on `/contact` work on
-GitHub Pages, which has no server-side rewrites.
+GitHub Pages, which has no server-side rewrites. It also writes a real
+`index.html` for every known route so those answer **200** rather than 404 —
+which matters for the county and service pages, since they are the ones people
+land on from search.
+
+`sitemap.xml` and `robots.txt` are generated in the same step from the same
+`ROUTES` array, so they cannot drift from the pages that actually exist. Add a
+route to `App.jsx` and to `ROUTES` and everything else follows.
 
 ---
 
@@ -117,8 +120,12 @@ src/
   styles/site.css     Design tokens and the whole design system.
   lib/prism.js        The hero's WebGL refraction shader.
   reactbits/          Vendored React Bits components (see note below).
-  components/         Masthead, Footer, Hero, ContactForm, ServiceGrid, ProofStrip.
-  pages/              One file per route.
+  components/         Masthead, Footer, Hero, ContactForm, ServiceGrid,
+                      CountyCards, TownReveal, ProofStrip, StructuredData,
+                      Canonical, Ph.
+  pages/              One file per route. /services/:slug and
+                      /service-areas/:slug are each driven by one component
+                      reading from config, not a file per service or county.
 ```
 
 ### Third-party pieces
@@ -137,8 +144,10 @@ the source:
 
 - `ScrollReveal.jsx` — upstream cleanup killed *every* ScrollTrigger on the
   page, which took out the other animations on route change.
-- `AnimatedContent.jsx` — content rendered with `visibility: hidden` and was
-  lost permanently if its trigger never fired. Added a failsafe.
+- `AnimatedContent.jsx` — content renders with `visibility: hidden` and was
+  lost permanently when its ScrollTrigger never fired, which took out two of
+  three service categories in production. Backstopped with an
+  IntersectionObserver plus a hard force-show.
 
 Keep those patches if you ever update these files from upstream.
 

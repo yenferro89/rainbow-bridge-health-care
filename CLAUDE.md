@@ -66,6 +66,38 @@ npm run preview   # port 4173
   (`fdb2e01`), not a SPA 404 fallback.
 - Accessibility floor is defined in `DESIGN.md` and is a floor, not an aspiration.
 
+## Verifying visual work — do not skip this
+
+**A passing build proves nothing about this site.** On 2026-08-03/04 four bugs shipped to
+production that a build, a lint and careful reading of the CSS all missed. Every one was caught in
+minutes by looking at the running page:
+
+| Bug | Why reading the code missed it |
+|---|---|
+| Two service categories rendered as blank space | `AnimatedContent` hides content until a ScrollTrigger fires; the trigger didn't |
+| County cards unclickable once the tilt engaged | Rotating the `<a>` in 3D swings it out from under the cursor |
+| Vision and Mission rendered completely unstyled | They borrowed `.services` class names; the services rebuild deleted that CSS |
+| Real phone/address glowing as placeholders | `Ph` highlighted everything it wrapped, filled or not |
+
+**Screenshot the running site before claiming any visual work is done.** Puppeteer with its own
+Chromium is already installed under the session scratchpad; if it isn't, `npm i puppeteer` then
+`npx puppeteer browsers install chrome`. The pattern that works:
+
+1. `npm run dev`, then drive `http://localhost:5173/rainbow-bridge-health-care/…`
+2. **Scroll the whole page slowly** — lazy images and ScrollTriggers need to actually enter the
+   viewport, and a fast scroll misses both
+3. **Wait for images:** `page.waitForFunction(() => [...document.images].every(i => i.complete && i.naturalHeight > 0))`
+4. **Disable smooth scrolling** before measuring: this site sets `html { scroll-behavior: smooth }`,
+   so `scrollIntoView` is async and `getBoundingClientRect` read straight after it measures
+   mid-scroll. That produced one entirely false "these links are dead" result.
+5. Check, every time: horizontal overflow (`scrollWidth > innerWidth`), elements stuck at
+   `opacity: 0`, wrappers stuck at `visibility: hidden`, broken images, console errors
+
+**Test interaction the way a person does it.** `element.click()` fires no `pointermove`, so it
+passes on cards whose hover or tilt handlers break the click. Use `page.mouse.move(...)` across the
+element **first**, then `mouse.down()` / `mouse.up()`. And test the biggest visual target — a
+photograph that looks clickable but isn't reads as broken even when every anchor on the page works.
+
 ## Keeping this repo bulletproof
 
 This project's knowledge lives here, in git, and nowhere else. When a work session produces
