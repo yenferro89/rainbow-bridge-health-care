@@ -94,6 +94,14 @@ export const proofPoints = [
   { figure: 2, suffix: " weeks", label: "[Typical time from call to first visit]" },
 ];
 
+/**
+ * Effective date shown on the legal pages. Deliberately still bracketed: on a
+ * HIPAA Notice of Privacy Practices the effective date is operative, so it
+ * should be the date counsel signs the notice off — not the date it was
+ * drafted. One edit here updates every legal page.
+ */
+export const legalUpdated = "[DATE]";
+
 /** Counties served. Shown in the hero, the footer and the schema's areaServed. */
 export const serviceAreas = ["Orange", "Osceola", "Seminole", "Brevard"];
 

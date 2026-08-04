@@ -27,6 +27,8 @@ const ROUTES = [
   "about",
   "privacy",
   "terms",
+  "accessibility",
+  "non-discrimination",
   "service-areas",
   ...COUNTY_SLUGS.map((s) => `service-areas/${s}`),
 ];

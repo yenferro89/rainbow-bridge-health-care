@@ -2107,6 +2107,51 @@ select.field__input {
   text-underline-offset: 3px;
 }
 
+.legal__list {
+  max-width: var(--measure);
+  list-style: none;
+  display: grid;
+  gap: 0.7rem;
+  margin-bottom: 1.4rem;
+}
+
+.legal__list li {
+  position: relative;
+  padding-left: 1.15rem;
+  text-wrap: pretty;
+}
+
+.legal__list li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0.68em;
+  width: 0.36rem;
+  height: 0.36rem;
+  border-radius: 50%;
+  background: var(--sky);
+}
+
+/* The all-caps HIPAA header and the Spanish language tagline — statements the
+   law expects to be conspicuous, so they are set apart rather than run in. */
+.legal__callout {
+  max-width: var(--measure);
+  padding: 1.1rem 1.25rem;
+  margin-block: 1.6rem;
+  border-left: 3px solid var(--sky);
+  background: rgba(33, 154, 208, 0.07);
+  border-radius: 0 var(--radius) var(--radius) 0;
+  font-weight: 500;
+  line-height: 1.55;
+}
+
+.legal code {
+  font-size: 0.92em;
+  padding: 0.1em 0.35em;
+  border-radius: 3px;
+  background: rgba(104, 48, 144, 0.09);
+}
+
 /* --------------------------------------------------------------------------
    Reveal states — GSAP drives these; CSS declares the resting position so the
    page is never invisible if the script fails to load.

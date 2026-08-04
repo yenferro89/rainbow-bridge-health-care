@@ -28,6 +28,24 @@ It skips any `[BRACKETED]` value rather than publishing it. Asserting a fake add
 worse than having no structured data, and the never-invent-facts rule applies to machines reading
 the site as much as to people. **Stands.**
 
+## 2026-08-03 — Legal pages drafted in full, review flag stays
+The owner asked to bring the site level with comparable providers. Privacy and Terms were
+skeletons with "[counsel to complete]" holes; both are now complete drafts, and two pages
+comparable healthcare sites carry were added: an **accessibility statement** and a **Section 1557
+non-discrimination notice**.
+
+This softens — but does not remove — the 2026-07-28 "legal pages need counsel" rule. Much of a
+HIPAA Notice of Privacy Practices has content defined by statute (45 CFR §164.520), so drafting
+it properly is better than leaving holes, and an attorney reviewing a finished draft costs far
+less than one drafting from scratch. **The review banner on every page stays, and no page claims
+to be legally sufficient.** Genuinely unknowable facts are still bracketed and highlighted:
+Privacy Officer name, Civil Rights Coordinator name, venue county, effective date, and which
+additional languages need a 1557 tagline.
+
+Two things counsel must confirm rather than assume: that the agency is a HIPAA covered entity,
+and that Section 1557 applies (it turns on receiving federal financial assistance, which Medicaid
+reimbursement ordinarily triggers). **Stands.**
+
 ## 2026-08-03 — The bar is "expensive, not boring, not AI"
 Owner instruction, given after a Vision/Mission block was first built as a plain two-column card
 grid. That block was rebuilt using the existing hairline `.services` grid with two spectrum bands

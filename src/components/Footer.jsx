@@ -98,6 +98,8 @@ export default function Footer() {
           <nav className="footer__legal" aria-label="Legal">
             <Link to="/privacy">Privacy &amp; HIPAA notice</Link>
             <Link to="/terms">Terms</Link>
+            <Link to="/accessibility">Accessibility</Link>
+            <Link to="/non-discrimination">Non-discrimination</Link>
             <a href="#main">Back to top</a>
           </nav>
         </div>
