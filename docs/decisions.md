@@ -13,6 +13,15 @@ decision lived in. A decision reversed in conversation but not in the docs will 
 
 ---
 
+## 2026-08-03 — Repo stays public; going private was considered and rejected
+Raised because this is client work and the repo records an unfinished pre-launch state.
+**Rejected** on cost/benefit: GitHub Pages does not serve private repos on the free plan, so
+private means either the live URL 404s, moving to Cloudflare Pages / Netlify / Vercel and changing
+the review URL, or $4/mo for GitHub Pro. Against that, nothing here is actually sensitive —
+`README.md` has documented the same launch checklist publicly since the site was built, so the
+pre-launch state was never private to begin with. **Stands** — revisit only if something genuinely
+non-public needs to live in the repo, which would be a reason to reopen it properly.
+
 ## 2026-07-28 — Placeholders stay bracketed and highlighted, never invented
 `src/config/site.js` holds every business detail as a `[BRACKETED]` placeholder, and
 `settings.highlightPlaceholders` paints them yellow on the live site. The owner explicitly asked
