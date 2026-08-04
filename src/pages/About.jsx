@@ -1,59 +1,80 @@
+import { useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
+import { gsap } from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 import Seo from "../components/Seo.jsx";
 import Hero from "../components/Hero.jsx";
 import ProofStrip from "../components/ProofStrip.jsx";
-import Ph from "../components/Ph.jsx";
-import AnimatedContent from "../reactbits/AnimatedContent.jsx";
 import { useReducedMotion } from "../lib/useReducedMotion.js";
-import { site } from "../config/site.js";
+import { site, contact } from "../config/site.js";
 
-/**
- * Vision and Mission sit in the same hairline grid as the services, carrying
- * two bands of the spectrum. Reusing that idiom rather than inventing a card
- * block keeps the page in the site's own language.
- */
-function Statements() {
-  const reduced = useReducedMotion();
+gsap.registerPlugin(ScrollTrigger);
 
-  const items = (
-    <ul className="services" style={{ "--service-cols": 2, "--service-cols-sm": 2 }}>
-      <li className="service" style={{ "--service-band": "var(--band-sky)" }}>
-        <h2 className="service__name">Our Vision</h2>
-        <p className="service__body">
-          To redefine home and community care by creating a future where every
-          individual is empowered to thrive, every family feels supported, and
-          exceptional care becomes the standard — not the exception.
-        </p>
-      </li>
-
-      <li className="service" style={{ "--service-band": "var(--band-violet)" }}>
-        <h2 className="service__name">Our Mission</h2>
-        <p className="service__body">
-          We deliver personalized care that goes beyond daily support. By
-          building meaningful relationships, promoting independence, and
-          embracing each person's unique abilities, we create experiences that
-          inspire confidence, enrich lives, and strengthen the communities we
-          serve.
-        </p>
-      </li>
-    </ul>
-  );
-
-  if (reduced) return items;
-
-  return (
-    <AnimatedContent distance={40} duration={0.9} threshold={0.25}>
-      {items}
-    </AnimatedContent>
-  );
-}
+const STATEMENTS = [
+  {
+    label: "Our vision",
+    band: "var(--band-sky)",
+    body: "To redefine home and community care by creating a future where every individual is empowered to thrive, every family feels supported, and exceptional care becomes the standard — not the exception.",
+  },
+  {
+    label: "Our mission",
+    band: "var(--band-violet)",
+    body: "We deliver personalized care that goes beyond daily support. By building meaningful relationships, promoting independence, and embracing each person's unique abilities, we create experiences that inspire confidence, enrich lives, and strengthen the communities we serve.",
+  },
+];
 
 export default function About() {
+  const root = useRef(null);
+  const reduced = useReducedMotion();
+
+  useEffect(() => {
+    if (reduced) return;
+    const el = root.current;
+    if (!el) return;
+
+    const ctx = gsap.context(() => {
+      // The story reads in as one block; the statements arrive in sequence.
+      gsap.from(".story__body > *", {
+        y: 28,
+        opacity: 0,
+        duration: 0.9,
+        stagger: 0.1,
+        ease: "power3.out",
+        scrollTrigger: { trigger: ".story", start: "top 78%", once: true },
+      });
+
+      gsap.from(".statement", {
+        y: 44,
+        opacity: 0,
+        duration: 0.95,
+        stagger: 0.12,
+        ease: "power3.out",
+        scrollTrigger: { trigger: ".statements", start: "top 82%", once: true },
+      });
+
+      // Each bloom drifts against the scroll so the panels have depth.
+      gsap.utils.toArray(".statement__bloom").forEach((b, i) => {
+        gsap.to(b, {
+          yPercent: i % 2 ? -16 : 16,
+          ease: "none",
+          scrollTrigger: {
+            trigger: ".statements",
+            start: "top bottom",
+            end: "bottom top",
+            scrub: 1,
+          },
+        });
+      });
+    }, root);
+
+    return () => ctx.revert();
+  }, [reduced]);
+
   return (
-    <>
+    <div ref={root}>
       <Seo
         title="About"
-        description={`${site.legalName} — who we are and how we work with families across Central Florida.`}
+        description={`${site.legalName} — who we are, what we believe, and how we work with families across Central Florida.`}
       />
 
       <Hero
@@ -66,48 +87,71 @@ export default function About() {
 
       <div className="crossing" aria-hidden="true" />
 
-      <section className="band band--daylight">
-        <div className="shell shell--narrow">
-          <div className="section-head">
-            <p className="eyebrow section-head__eyebrow">Our story</p>
-            <h2 className="display section-head__title">
-              Why we started this
-            </h2>
-          </div>
+      <section className="band band--daylight story">
+        <div className="shell">
+          <div className="story__grid">
+            <div className="story__aside">
+              <p className="eyebrow section-head__eyebrow">Our story</p>
+              <h2 className="display story__title">Why we started this</h2>
+            </div>
 
-          <p className="prose">
-            Every person has a unique journey, and every family deserves a
-            trusted partner along the way. Our agency was founded with a simple
-            belief: exceptional care is not just about meeting needs — it's
-            about building relationships, creating opportunities for
-            independence, and making every interaction meaningful. We are
-            committed to delivering personalized support that empowers
-            individuals to live with confidence, dignity, and purpose in the
-            place they call home.
-          </p>
+            <div className="story__body">
+              <p className="story__lead">
+                Every person has a unique journey, and every family deserves a
+                trusted partner along the way.
+              </p>
+              <p className="prose">
+                Our agency was founded with a simple belief: exceptional care is
+                not just about meeting needs — it's about building
+                relationships, creating opportunities for independence, and
+                making every interaction meaningful.
+              </p>
+              <p className="prose">
+                We are committed to delivering personalized support that empowers
+                individuals to live with confidence, dignity, and purpose in the
+                place they call home.
+              </p>
+            </div>
+          </div>
         </div>
       </section>
 
       <section className="band band--vapor">
         <div className="shell">
-          <Statements />
+          <ul className="statements">
+            {STATEMENTS.map((s) => (
+              <li
+                className="statement"
+                key={s.label}
+                style={{ "--statement-band": s.band }}
+              >
+                <span className="statement__bloom" aria-hidden="true" />
+                <p className="statement__label">{s.label}</p>
+                <p className="statement__body">{s.body}</p>
+              </li>
+            ))}
+          </ul>
         </div>
       </section>
 
-      <section className="band band--vapor">
+      <section className="band band--daylight">
         <div className="shell">
           <div className="section-head">
             <p className="eyebrow section-head__eyebrow">By the numbers</p>
             <h2 className="display section-head__title">Where we are today</h2>
           </div>
           <ProofStrip />
-          <p style={{ marginTop: "3rem" }}>
+
+          <div className="about__cta">
             <Link to="/contact" className="btn btn--primary">
               Start a conversation
             </Link>
-          </p>
+            <a href={contact.phoneHref} className="btn btn--ghost">
+              Call {contact.phone}
+            </a>
+          </div>
         </div>
       </section>
-    </>
+    </div>
   );
 }

@@ -28,6 +28,22 @@ It skips any `[BRACKETED]` value rather than publishing it. Asserting a fake add
 worse than having no structured data, and the never-invent-facts rule applies to machines reading
 the site as much as to people. **Stands.**
 
+## 2026-08-03 — About rebuilt; Vision/Mission regression fixed
+The services rebuild replaced the `.services`/`.service` CSS, but About's Vision and Mission were
+still using those class names — so both rendered completely unstyled on the live site for several
+commits. They are now their own `.statement` panels with band blooms and no shared dependency on
+another section's styles.
+
+**Lesson worth keeping:** reusing another component's class names to "stay in the idiom" couples
+two sections invisibly. Share tokens and patterns, not selectors.
+
+The story now runs as a two-column editorial block with a sticky heading, and the client's first
+sentence is pulled up to display scale — it is the thesis of the page and was buried mid-paragraph.
+
+**Open:** About carries no photography, unlike every other page. A stock photo here would read as
+"our team" and would be a business fact we do not have. It needs a real photograph of the owner or
+the team from the client. **Stands** until she supplies one.
+
 ## 2026-08-03 — Legal pages drafted in full, review flag stays
 The owner asked to bring the site level with comparable providers. Privacy and Terms were
 skeletons with "[counsel to complete]" holes; both are now complete drafts, and two pages
