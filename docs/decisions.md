@@ -13,12 +13,18 @@ decision lived in. A decision reversed in conversation but not in the docs will 
 
 ---
 
-## 2026-08-03 — Build in the site's own vocabulary, not generic AI layout
+## 2026-08-03 — The bar is "expensive, not boring, not AI"
 Owner instruction, given after a Vision/Mission block was first built as a plain two-column card
 grid. That block was rebuilt using the existing hairline `.services` grid with two spectrum bands
-and `AnimatedContent`, which is the site's established idiom. **Rejected:** inventing new
-component patterns when an existing one fits. React Bits was vendored deliberately (see
-2026-07-28) and should be used. **Stands** — hard constraint in `CLAUDE.md`.
+and `AnimatedContent`.
+
+The reasoning matters more than the correction: **Motion, GSAP, three.js and React Bits are in
+this project specifically to make it feel expensive.** They are not incidental dependencies, and
+a change that ignores them and ships flat markup misses the point even when it's technically
+correct. Recorded in `docs/references.md`, which exists because these links were shared in an
+earlier session and lived nowhere in the repo — a later session had no way to know the stack was
+deliberate. **Rejected:** inventing new component patterns when an existing one fits.
+**Stands** — hard constraint in `CLAUDE.md`.
 
 ## 2026-08-03 — Site stays English-only
 The client annotates in Spanish because she is a Spanish speaker. That is not a request for a

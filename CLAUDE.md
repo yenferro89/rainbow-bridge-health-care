@@ -24,6 +24,7 @@ npm run preview   # port 4173
 | File | What it holds |
 |---|---|
 | `docs/decisions.md` | **Why things are the way they are.** Dated log, newest first. |
+| `docs/references.md` | The libraries the owner chose (Motion, GSAP, three.js, React Bits) and where each is used |
 | `DESIGN.md` | Design system — "light through water", color, type, motion, a11y floor |
 | `README.md` | Launch checklist: placeholders, Brevo wiring, legal review, deploy |
 | `src/config/site.js` | Every business detail, currently `[BRACKETED]` placeholders |
@@ -40,13 +41,19 @@ npm run preview   # port 4173
 - **Brand colors are sampled, not chosen.** They come from the client's logo PNG. Don't "improve",
   harmonize, or substitute them. See `DESIGN.md`.
 - **Legal pages need counsel.** Privacy and Terms are not for us to draft.
-- **Do not make it look AI-generated.** This is the owner's standing instruction. Build with the
-  vocabulary the site already has — the colour bands, the hairline grids, the `band--*` sections,
-  the crossings, `DESIGN.md`'s "light through water" idea, and the vendored React Bits components
-  in `src/reactbits/` (`AnimatedContent`, `ScrollReveal`, `SplitText`, `CountUp`, `GradualBlur`).
-  Reach for an existing pattern before inventing a new one. The tells to avoid: generic card
-  grids with drop shadows, three-column feature blocks, pill badges, emoji headings, gradient
-  hero text, and stock "modern SaaS" layout that could belong to any site.
+- **It has to feel expensive. Not boring, and not AI-generated.** This is the owner's standing
+  instruction and the bar every change is judged against. The modern tooling is there precisely
+  to hit it — Motion, GSAP, three.js and React Bits were chosen on purpose, not by accident. See
+  `docs/references.md`.
+
+  Build with the vocabulary the site already has: the colour bands, the hairline grids, the
+  `band--*` sections, the crossings, the prism shader, `DESIGN.md`'s "light through water" idea.
+  Reach for an existing pattern — or a React Bits component — before inventing a new one.
+
+  The tells to avoid: generic card grids with drop shadows, three-column feature blocks, pill
+  badges, emoji headings, gradient hero text, and stock "modern SaaS" layout that could belong to
+  any site. Static and safe is a failure here, the same as gaudy would be. When a section feels
+  flat, the fix is usually motion or depth from the existing toolkit, not more boxes.
 
 ## Conventions
 
