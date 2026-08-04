@@ -2,8 +2,8 @@ import { Link, useParams, Navigate } from "react-router-dom";
 import Seo from "../components/Seo.jsx";
 import Hero from "../components/Hero.jsx";
 import ServiceGrid from "../components/ServiceGrid.jsx";
+import TownReveal from "../components/TownReveal.jsx";
 import ScrollReveal from "../reactbits/ScrollReveal.jsx";
-import AnimatedContent from "../reactbits/AnimatedContent.jsx";
 import { useReducedMotion } from "../lib/useReducedMotion.js";
 import { counties, contact } from "../config/site.js";
 
@@ -77,9 +77,9 @@ export default function ServiceArea() {
             </h2>
           </div>
 
-          <TownList towns={county.towns} band={county.band} reduced={reduced} />
+          <TownReveal towns={county.towns} band={county.band} />
 
-          <p className="section-head__lede" style={{ marginTop: "2rem" }}>
+          <p className="section-head__lede" style={{ marginTop: "2.5rem" }}>
             Not on the list? {county.seat} is our anchor in {county.name} and we
             travel from there — ask, and we will tell you plainly whether we can
             reach you.
@@ -105,29 +105,31 @@ export default function ServiceArea() {
           </p>
         </div>
       </section>
+
+      <section className="band band--vapor">
+        <div className="shell">
+          <div className="section-head">
+            <p className="eyebrow section-head__eyebrow">The other counties</p>
+            <h2 className="display section-head__title">We also serve</h2>
+          </div>
+
+          <ul className="crosslinks">
+            {counties
+              .filter((c) => c.slug !== county.slug)
+              .map((c) => (
+                <li key={c.slug} style={{ "--cross-band": c.band }}>
+                  <Link className="crosslink" to={`/service-areas/${c.slug}`}>
+                    <span className="crosslink__name">{c.name}</span>
+                    <span className="crosslink__towns">
+                      {c.towns.slice(0, 3).join(" · ")}
+                    </span>
+                  </Link>
+                </li>
+              ))}
+          </ul>
+        </div>
+      </section>
     </>
   );
 }
 
-/* -------------------------------------------------------------------------- */
-
-/** Towns as an editorial column rule, each one carrying the county's band. */
-function TownList({ towns, band, reduced }) {
-  const list = (
-    <ul className="towns" style={{ "--town-band": band }}>
-      {towns.map((t) => (
-        <li className="town" key={t}>
-          <span className="town__name">{t}</span>
-        </li>
-      ))}
-    </ul>
-  );
-
-  if (reduced) return list;
-
-  return (
-    <AnimatedContent distance={36} duration={0.85} threshold={0.2}>
-      {list}
-    </AnimatedContent>
-  );
-}

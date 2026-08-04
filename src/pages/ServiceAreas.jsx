@@ -1,29 +1,9 @@
 import { Link } from "react-router-dom";
 import Seo from "../components/Seo.jsx";
 import Hero from "../components/Hero.jsx";
-import AnimatedContent from "../reactbits/AnimatedContent.jsx";
-import { useReducedMotion } from "../lib/useReducedMotion.js";
-import { counties } from "../config/site.js";
+import CountyCards from "../components/CountyCards.jsx";
 
 export default function ServiceAreas() {
-  const reduced = useReducedMotion();
-
-  const grid = (
-    <ul className="areas">
-      {counties.map((c) => (
-        <li className="area" key={c.slug} style={{ "--area-band": c.band }}>
-          <Link className="area__link" to={`/service-areas/${c.slug}`}>
-            <span className="area__name">{c.name}</span>
-            <span className="area__towns">{c.towns.slice(0, 5).join(" · ")}</span>
-            <span className="area__more" aria-hidden="true">
-              In-home care in {c.name}
-            </span>
-          </Link>
-        </li>
-      ))}
-    </ul>
-  );
-
   return (
     <>
       <Seo
@@ -48,13 +28,7 @@ export default function ServiceAreas() {
 
       <section className="band band--daylight">
         <div className="shell">
-          {reduced ? (
-            grid
-          ) : (
-            <AnimatedContent distance={40} duration={0.9} threshold={0.15}>
-              {grid}
-            </AnimatedContent>
-          )}
+          <CountyCards />
         </div>
       </section>
     </>

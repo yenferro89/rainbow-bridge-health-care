@@ -53,9 +53,14 @@ export const contact = {
     zip: "32819",
   },
 
-  // Paste the "Embed a map" src from Google Maps. Leave empty to show a
-  // styled placeholder instead of an empty grey box.
-  mapEmbedSrc: "",
+  // The "Embed a map" src from Google Maps, supplied by the client 2026-08-03.
+  mapEmbedSrc:
+    "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3508.3429601657645!2d-81.43248472445407!3d28.439076175770882!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x88e77e783128e559%3A0xb8099652d2c4eeab!2s7362%20Futures%20Dr%2014%20109%2C%20Orlando%2C%20FL%2032819!5e0!3m2!1sen!2sus!4v1785813372656!5m2!1sen!2sus",
+
+  // Read off the map embed above. Feeds LocalBusiness schema — Google matches
+  // a provider to a place far more confidently with coordinates than with a
+  // postal address alone.
+  geo: { lat: 28.4390762, lng: -81.4324847 },
 
   hours: [
     { day: "Monday – Friday", time: "[8:30 AM – 5:00 PM]" },

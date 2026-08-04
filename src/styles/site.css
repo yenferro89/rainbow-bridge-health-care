@@ -1112,10 +1112,156 @@ a {
 }
 
 /* --------------------------------------------------------------------------
-   Service areas — the county index, and the town list on each county page
+   Service areas — tilting county cards, and towns at display scale
    -------------------------------------------------------------------------- */
 
-.areas {
+.counties {
+  list-style: none;
+  display: grid;
+  gap: clamp(1.25rem, 2.5vw, 2rem);
+  perspective: 1200px;
+}
+
+@media (min-width: 48rem) {
+  .counties {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+.county {
+  transform-style: preserve-3d;
+}
+
+.county__inner {
+  position: relative;
+  /* Flex, not grid — the CTA pins to the base with margin-top:auto, which
+     align-content:start on a grid quietly ignores. */
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.45rem;
+  isolation: isolate;
+  overflow: hidden;
+  padding: clamp(1.9rem, 3.6vw, 3rem);
+  min-height: clamp(15rem, 26vw, 20rem);
+  border-radius: clamp(16px, 2vw, 26px);
+  text-decoration: none;
+  color: inherit;
+  background: var(--daylight);
+  border: 1px solid rgba(104, 48, 144, 0.14);
+  transform-style: preserve-3d;
+  will-change: transform;
+  box-shadow:
+    0 2px 6px rgba(24, 11, 38, 0.05),
+    0 24px 50px -26px color-mix(in srgb, var(--county-band, var(--iris)) 45%, transparent);
+  transition: box-shadow 0.6s var(--ease-out), border-color 0.6s var(--ease-out);
+}
+
+.county__inner:hover {
+  border-color: color-mix(in srgb, var(--county-band, var(--iris)) 45%, transparent);
+  box-shadow:
+    0 2px 6px rgba(24, 11, 38, 0.06),
+    0 34px 70px -26px color-mix(in srgb, var(--county-band, var(--iris)) 60%, transparent);
+}
+
+/* The band as a light source behind the card, tracking the pointer. */
+.county__bloom {
+  position: absolute;
+  z-index: -1;
+  inset: -30%;
+  background: radial-gradient(
+    42% 42% at 50% 50%,
+    color-mix(in srgb, var(--county-band, var(--iris)) 78%, transparent),
+    transparent 70%
+  );
+  filter: blur(46px);
+  opacity: 0.5;
+  will-change: transform;
+}
+
+.county__label {
+  font-size: var(--step--1);
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--iris);
+  opacity: 0.7;
+}
+
+.county__name {
+  font-family: var(--display);
+  font-variation-settings: "SOFT" 70, "WONK" 0, "opsz" 144;
+  font-size: var(--step-4);
+  font-weight: 400;
+  line-height: 0.95;
+  letter-spacing: -0.03em;
+}
+
+.county__towns {
+  font-size: var(--step--1);
+  color: var(--ink-soft);
+  line-height: 1.55;
+  margin-top: 0.35rem;
+}
+
+.county__cta {
+  margin-top: auto;
+  padding-top: 1.25rem;
+  font-size: var(--step--1);
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--iris);
+}
+
+.county__cta::after {
+  content: " →";
+  display: inline-block;
+  transition: transform 0.45s var(--ease-out);
+}
+
+.county__inner:hover .county__cta::after {
+  transform: translateX(0.4rem);
+}
+
+/* Towns, set at display scale. Each name rises out of its own clip box. */
+.towns {
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  column-gap: clamp(1.5rem, 3.5vw, 3.25rem);
+  row-gap: clamp(0.35rem, 1vw, 0.7rem);
+}
+
+.town__clip {
+  overflow: hidden;
+  padding-block: 0.12em;
+}
+
+.town {
+  display: block;
+  font-family: var(--display);
+  font-variation-settings: "SOFT" 70, "WONK" 0, "opsz" 96;
+  font-size: var(--step-3);
+  font-weight: 400;
+  line-height: 1.12;
+  letter-spacing: -0.025em;
+  background-image: linear-gradient(var(--town-band, var(--iris)), var(--town-band, var(--iris)));
+  background-repeat: no-repeat;
+  background-position: 0 100%;
+  background-size: 0% 2px;
+  transition: background-size 0.5s var(--ease-out);
+  will-change: transform;
+}
+
+@media (hover: hover) {
+  .town:hover {
+    background-size: 100% 2px;
+  }
+}
+
+/* Cross-links to the other counties. */
+.crosslinks {
   list-style: none;
   display: grid;
   gap: 1px;
@@ -1123,108 +1269,51 @@ a {
   border-block: 1px solid rgba(104, 48, 144, 0.16);
 }
 
-@media (min-width: 48rem) {
-  .areas {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+@media (min-width: 44rem) {
+  .crosslinks {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
   }
 }
 
-.area {
-  background: var(--daylight);
-}
-
-.area__link {
+.crosslink {
   position: relative;
   display: grid;
-  gap: 0.5rem;
-  align-content: start;
-  padding: clamp(1.9rem, 3.6vw, 2.75rem) clamp(1.35rem, 2.6vw, 2.1rem);
+  gap: 0.3rem;
+  padding: clamp(1.4rem, 2.6vw, 2rem) clamp(1.1rem, 2vw, 1.6rem);
+  background: var(--vapor);
   text-decoration: none;
   color: inherit;
   overflow: hidden;
-  isolation: isolate;
 }
 
-/* The county's band sweeps up from the floor of the tile on hover. */
-.area__link::after {
+.crosslink::after {
   content: "";
   position: absolute;
   inset-inline: 0;
   bottom: 0;
-  height: 100%;
-  z-index: -1;
-  background: linear-gradient(
-    0deg,
-    color-mix(in srgb, var(--area-band, var(--iris)) 15%, transparent),
-    transparent 55%
-  );
-  opacity: 0;
-  transform: translateY(0.9rem);
-  transition: opacity 0.55s var(--ease-out), transform 0.55s var(--ease-out);
+  height: 3px;
+  background: var(--cross-band, var(--iris));
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.5s var(--ease-out);
 }
 
-.area__link:hover::after,
-.area__link:focus-visible::after {
-  opacity: 1;
-  transform: translateY(0);
+.crosslink:hover::after,
+.crosslink:focus-visible::after {
+  transform: scaleX(1);
 }
 
-.area__name {
-  font-family: var(--display);
-  font-variation-settings: "SOFT" 55, "WONK" 1, "opsz" 60;
-  font-size: var(--step-2);
-  font-weight: 500;
-  line-height: 1.1;
-  letter-spacing: -0.02em;
-}
-
-.area__towns {
-  font-size: var(--step--1);
-  color: var(--ink-soft);
-  line-height: 1.55;
-}
-
-.area__more {
-  font-size: var(--step--1);
-  font-weight: 600;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: var(--iris);
-  margin-top: 0.4rem;
-}
-
-.area__more::after {
-  content: " →";
-  display: inline-block;
-  transition: transform 0.4s var(--ease-out);
-}
-
-.area__link:hover .area__more::after {
-  transform: translateX(0.35rem);
-}
-
-/* Towns: a wrapped rule of names, each picking up the county's band. */
-.towns {
-  list-style: none;
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.6rem 0;
-}
-
-.town {
-  position: relative;
-  padding: 0.35rem clamp(0.9rem, 2vw, 1.5rem);
-  border-left: 2px solid var(--town-band, var(--iris));
-}
-
-.town__name {
+.crosslink__name {
   font-family: var(--display);
   font-variation-settings: "SOFT" 70, "WONK" 0, "opsz" 40;
   font-size: var(--step-1);
-  font-weight: 400;
-  line-height: 1.2;
-  letter-spacing: -0.01em;
-  white-space: nowrap;
+  font-weight: 500;
+  line-height: 1.15;
+}
+
+.crosslink__towns {
+  font-size: var(--step--1);
+  color: var(--ink-soft);
 }
 
 /* --------------------------------------------------------------------------

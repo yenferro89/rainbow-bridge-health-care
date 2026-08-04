@@ -59,6 +59,14 @@ export default function StructuredData() {
       };
     }
 
+    if (contact.geo?.lat && contact.geo?.lng) {
+      data.geo = {
+        "@type": "GeoCoordinates",
+        latitude: contact.geo.lat,
+        longitude: contact.geo.lng,
+      };
+    }
+
     const licences = credentials
       .filter((c) => real(c.value))
       .map((c) => `${c.label}: ${c.value}`);
